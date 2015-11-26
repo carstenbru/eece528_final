@@ -3,7 +3,7 @@
 #include <cmath>
 
 #include "Vec3.hpp"
-#include "Sphere.hpp"
+#include "RayObject.hpp"
 
 #ifndef RAYTRACER_HPP_
 #define RAYTRACER_HPP_
@@ -14,13 +14,12 @@ public:
 	}
 	;
 
-	Vec3f trace(const Vec3f &rayorig, const Vec3f &raydir,
-			const std::vector<Sphere> &spheres, const int &depth);
+	Vec3f trace(const Vec3f &rayorig, const Vec3f &raydir, const int &depth);
 	void render();
 	void loadScene(std::string filename);
 
 private:
-	std::vector<Sphere> spheres;
+	std::vector<RayObject*> objects;
 };
 
 #endif
