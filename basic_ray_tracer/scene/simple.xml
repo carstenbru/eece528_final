@@ -1,0 +1,45 @@
+<Scene>
+    <Sphere>
+        <center x="0.0" y="-10004" z="-20"/>
+        <radius value="10000"/>
+        <surfaceColor r="0.2" g="0.2" b="0.2"/>
+        <reflection value="0"/>
+        <transparency value="0.0"/>
+    </Sphere>
+    <Sphere>
+        <center x="0.0" y="0" z="-20"/>
+        <radius value="4"/>
+        <surfaceColor r="1" g="0.32" b="0.36"/>
+        <reflection value="1"/>
+        <transparency value="0.5"/>
+    </Sphere>
+    <Sphere>
+        <center x="5.0" y="-1" z="-15"/>
+        <radius value="2"/>
+        <surfaceColor r="0.9" g="0.76" b="0.46"/>
+        <reflection value="1"/>
+        <transparency value="0.0"/>
+    </Sphere>
+    <Sphere>
+        <center x="5.0" y="0" z="-25"/>
+        <radius value="3"/>
+        <surfaceColor r="0.65" g="0.77" b="0.97"/>
+        <reflection value="1"/>
+        <transparency value="0.5"/>
+    </Sphere>
+    <Sphere>
+        <center x="-5.5" y="0" z="-25"/>
+        <radius value="3"/>
+        <surfaceColor r="0.9" g="0.9" b="0.9"/>
+        <reflection value="1"/>
+        <transparency value="0.0"/>
+    </Sphere>
+    <Sphere>
+        <center x="0.0" y="20" z="-30"/>
+        <radius value="3"/>
+        <surfaceColor r="0.0" g="0.0" b="0.0"/>
+        <reflection value="0"/>
+        <transparency value="0.0"/>
+        <emissionColor r="3" g="3" b="3"/>
+    </Sphere>
+</Scene>

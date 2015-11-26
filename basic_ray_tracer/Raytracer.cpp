@@ -21,16 +21,23 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // [/ignore]
+
 #include "Raytracer.hpp"
 
-#include <cstdlib>
-#include <cstdio>
+//#include <stdlib.h>
+#include <algorithm>
+//#include <cassert>
+//#include <cstdio>
+//#include <cstdlib>
+#include <fstream>
+//#include <iosfwd>
+#include <string>
+#include <iostream>
 #include <fstream>
 
-#include <cassert>
-#include <stdlib.h>
-
 #include "Sphere.hpp"
+
+using namespace std;
 
 //[comment]
 // This variable controls the maximum recursion depth
@@ -51,7 +58,8 @@ float mix(const float &a, const float &b, const float &mix) {
 // is the color of the object at the intersection point, otherwise it returns
 // the background color.
 //[/comment]
-Vec3f Raytracer::trace(const Vec3f &rayorig, const Vec3f &raydir, const int &depth) {
+Vec3f Raytracer::trace(const Vec3f &rayorig, const Vec3f &raydir,
+		const int &depth) {
 	//if (raydir.length() != 1) std::cerr << "Error " << raydir << std::endl;
 	float tnear = INFINITY;
 	const RayObject* object = NULL;
@@ -167,10 +175,10 @@ void Raytracer::render() {
 	delete[] image;
 }
 
-//TODO load scene from file
-void Raytracer::loadScene(std::string filename) {	 // position, radius, surface color, reflectivity, transparency, emission color
+void Raytracer::generateSimpleScene() {
 	objects.push_back(
-			new Sphere(Vec3f(0.0, -10004, -20), 10000, Vec3f(0.20, 0.20, 0.20), 0, 0.0));
+			new Sphere(Vec3f(0.0, -10004, -20), 10000, Vec3f(0.20, 0.20, 0.20), 0,
+					0.0));
 	objects.push_back(
 			new Sphere(Vec3f(0.0, 0, -20), 4, Vec3f(1.00, 0.32, 0.36), 1, 0.5));
 	objects.push_back(
@@ -183,4 +191,90 @@ void Raytracer::loadScene(std::string filename) {	 // position, radius, surface 
 	objects.push_back(
 			new Sphere(Vec3f(0.0, 20, -30), 3, Vec3f(0.00, 0.00, 0.00), 0, 0.0,
 					Vec3f(3)));
+}
+
+Vec3f Raytracer::parseVector(string line) {  //98
+	int pos = line.find("=\"") + 2;
+	int pos2 = line.find("\"", pos) - pos;
+	string number1 = line.substr(pos, line.find("\"", pos) - pos);
+
+	pos = line.find("=\"", pos + pos2) + 2;
+	pos2 = line.find("\"", pos) - pos;
+	string number2 = line.substr(pos, line.find("\"", pos) - pos);
+
+	pos = line.find("=\"", pos + pos2) + 2;
+	pos2 = line.find("\"", pos) - pos;
+	string number3 = line.substr(pos, line.find("\"", pos) - pos);
+
+	return Vec3f(atof(number1.c_str()), atof(number2.c_str()),
+			atof(number3.c_str()));  //TODO
+}
+
+float Raytracer::parseFloat(string line) {
+	int pos = line.find("value=\"") + 7;
+	string number = line.substr(pos, line.find("\"", pos) - pos);
+	return atof(number.c_str());
+}
+
+void Raytracer::parseScene(ifstream& in) {
+	string line;
+	while (getline(in, line)) {
+		if (line.find("</Scene>") != string::npos) {
+			return;
+		}
+		if (line.find("<Sphere>") != string::npos) {
+			parseSphere(in);
+		}
+	}
+}
+
+void Raytracer::parseSphere(ifstream& in) {
+	Vec3f center = 0;
+	float radius = 0;
+	Vec3f surfaceColor = 0;
+	float reflection = 0;
+	float transparency = 0;
+	Vec3f emissionColor = 0;
+
+	string line;
+	while (getline(in, line)) {
+		if (line.find("</Sphere>") != string::npos) {
+			objects.push_back(
+					new Sphere(center, radius, surfaceColor, reflection, transparency,
+							emissionColor));
+			return;
+		}
+		if (line.find("<center") != string::npos) {
+			center = parseVector(line);
+		}
+		if (line.find("<radius") != string::npos) {
+			radius = parseFloat(line);
+		}
+		if (line.find("<surfaceColor") != string::npos) {
+			surfaceColor = parseVector(line);
+		}
+		if (line.find("<reflection") != string::npos) {
+			reflection = parseFloat(line);
+		}
+		if (line.find("<transparency") != string::npos) {
+			transparency = parseFloat(line);
+		}
+		if (line.find("<emissionColor") != string::npos) {
+			emissionColor = parseVector(line);
+		}
+	}
+}
+
+void Raytracer::loadScene(std::string filename) {	 // position, radius, surface color, reflectivity, transparency, emission color
+	string line;
+	ifstream in(filename.c_str());
+	if (in.is_open()) {
+		while (getline(in, line)) {
+			if (line.find("<Scene>") != string::npos) {
+				parseScene(in);
+			}
+			//	cout << line << '\n';
+		}
+		in.close();
+	}
 }

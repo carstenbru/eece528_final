@@ -11,7 +11,8 @@ using namespace std;
 //[/comment]
 int main(int argc, char **argv) {
 	Raytracer raytracer;
-	raytracer.loadScene("abc.xml");
+	raytracer.loadScene("scene/simple.xml");
+	//raytracer.generateSimpleScene();
 	raytracer.render();
 
 	cout << "finished" << endl;
