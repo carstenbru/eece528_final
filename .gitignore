@@ -1,2 +1,6 @@
 a.out
 *.ppm
+.cproject
+.project
+.settings
+Debug/
