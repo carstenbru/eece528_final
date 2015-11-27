@@ -11,7 +11,8 @@
 
 class Raytracer {
 public:
-	Raytracer() {
+	Raytracer(int screenWidth, int screenHeight) :
+			screenWidth(screenWidth), screenHeight(screenHeight) {
 	}
 	;
 	void render(unsigned int* imageData);
@@ -26,6 +27,9 @@ private:
 	float parseFloat(std::string line);
 
 	std::vector<RayObject*> objects;
+
+	int screenWidth;
+	int screenHeight;
 };
 
 #endif

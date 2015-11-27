@@ -148,14 +148,13 @@ Vec3f Raytracer::trace(const Vec3f &rayorig, const Vec3f &raydir,
 // sphere at the intersection point, else we return the background color.
 //[/comment]
 void Raytracer::render(unsigned int* imageData) {
-	unsigned width = 640, height = 480;
 	Vec3f pixel;
-	float invWidth = 1 / float(width), invHeight = 1 / float(height);
-	float fov = 30, aspectratio = width / float(height);
+	float invWidth = 1 / float(screenWidth), invHeight = 1 / float(screenHeight);
+	float fov = 30, aspectratio = screenWidth / float(screenHeight);
 	float angle = tan(M_PI * 0.5 * fov / 180.);
 	// Trace rays
-	for (unsigned y = 0; y < height; ++y) {
-		for (unsigned x = 0; x < width; ++x) {
+	for (unsigned y = 0; y < screenHeight; ++y) {
+		for (unsigned x = 0; x < screenWidth; ++x) {
 			float xx = (2 * ((x + 0.5) * invWidth) - 1) * angle * aspectratio;
 			float yy = (1 - 2 * ((y + 0.5) * invHeight)) * angle;
 			Vec3f raydir(xx, yy, -1);

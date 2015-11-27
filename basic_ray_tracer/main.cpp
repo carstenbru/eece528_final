@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
 	IBMP * frame;
 	frame = create_surface(width, height);
 
-	Raytracer raytracer;
+	Raytracer raytracer(width, height);
 	raytracer.loadScene("scene/simple.xml");
 	//raytracer.generateSimpleScene();
 	raytracer.render((unsigned int*) frame->pixels);
