@@ -14,7 +14,7 @@ public:
 	Raytracer() {
 	}
 	;
-	void render();
+	void render(unsigned int* imageData);
 	void loadScene(std::string filename);
 	void generateSimpleScene();
 

@@ -77,7 +77,7 @@ Vec3f Raytracer::trace(const Vec3f &rayorig, const Vec3f &raydir,
 	}
 	// if there's no intersection return black or background color
 	if (!object)
-		return Vec3f(2);
+		return Vec3f(3);
 	Vec3f surfaceColor = 0;  // color of the ray/surfaceof the object intersected by the ray
 	Vec3f phit = rayorig + raydir * tnear;  // point of intersection
 	Vec3f nhit = phit - object->center;  // normal at the intersection point
@@ -147,32 +147,37 @@ Vec3f Raytracer::trace(const Vec3f &rayorig, const Vec3f &raydir,
 // trace it and return a color. If the ray hits a sphere, we return the color of the
 // sphere at the intersection point, else we return the background color.
 //[/comment]
-void Raytracer::render() {
+void Raytracer::render(unsigned int* imageData) {
 	unsigned width = 640, height = 480;
-	Vec3f *image = new Vec3f[width * height], *pixel = image;
+	Vec3f pixel;
 	float invWidth = 1 / float(width), invHeight = 1 / float(height);
 	float fov = 30, aspectratio = width / float(height);
 	float angle = tan(M_PI * 0.5 * fov / 180.);
 	// Trace rays
 	for (unsigned y = 0; y < height; ++y) {
-		for (unsigned x = 0; x < width; ++x, ++pixel) {
+		for (unsigned x = 0; x < width; ++x) {
 			float xx = (2 * ((x + 0.5) * invWidth) - 1) * angle * aspectratio;
 			float yy = (1 - 2 * ((y + 0.5) * invHeight)) * angle;
 			Vec3f raydir(xx, yy, -1);
 			raydir.normalize();
-			*pixel = trace(Vec3f(0), raydir, 0);
+			pixel = trace(Vec3f(0), raydir, 0);
+			*imageData++ = (int) (std::min(float(1), pixel.x) * 255) << 16
+					| (int) (std::min(float(1), pixel.y) * 255) << 8
+					| (int) (std::min(float(1), pixel.z) * 255);
 		}
 	}
-	// Save result to a PPM image (keep these flags if you compile under Windows)
-	std::ofstream ofs("./untitled.ppm", std::ios::out | std::ios::binary);
-	ofs << "P6\n" << width << " " << height << "\n255\n";
-	for (unsigned i = 0; i < width * height; ++i) {
-		ofs << (unsigned char) (std::min(float(1), image[i].x) * 255)
-				<< (unsigned char) (std::min(float(1), image[i].y) * 255)
-				<< (unsigned char) (std::min(float(1), image[i].z) * 255);
-	}
-	ofs.close();
-	delete[] image;
+	/*
+	 // Save result to a PPM image (keep these flags if you compile under Windows)
+	 std::ofstream ofs("./untitled.ppm", std::ios::out | std::ios::binary);
+	 ofs << "P6\n" << width << " " << height << "\n255\n";
+	 for (unsigned i = 0; i < width * height; ++i) {
+	 ofs << (unsigned char) (std::min(float(1), image[i].x) * 255)
+	 << (unsigned char) (std::min(float(1), image[i].y) * 255)
+	 << (unsigned char) (std::min(float(1), image[i].z) * 255);
+
+	 }
+	 ofs.close();
+	 delete[] image;*/
 }
 
 void Raytracer::generateSimpleScene() {
@@ -193,7 +198,7 @@ void Raytracer::generateSimpleScene() {
 					Vec3f(3)));
 }
 
-Vec3f Raytracer::parseVector(string line) {  //98
+Vec3f Raytracer::parseVector(string line) {
 	int pos = line.find("=\"") + 2;
 	int pos2 = line.find("\"", pos) - pos;
 	string number1 = line.substr(pos, line.find("\"", pos) - pos);
@@ -207,7 +212,7 @@ Vec3f Raytracer::parseVector(string line) {  //98
 	string number3 = line.substr(pos, line.find("\"", pos) - pos);
 
 	return Vec3f(atof(number1.c_str()), atof(number2.c_str()),
-			atof(number3.c_str()));  //TODO
+			atof(number3.c_str()));
 }
 
 float Raytracer::parseFloat(string line) {
@@ -273,7 +278,6 @@ void Raytracer::loadScene(std::string filename) {	 // position, radius, surface 
 			if (line.find("<Scene>") != string::npos) {
 				parseScene(in);
 			}
-			//	cout << line << '\n';
 		}
 		in.close();
 	}
