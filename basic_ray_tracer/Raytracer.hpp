@@ -11,7 +11,7 @@
 
 class Raytracer {
 public:
-	Raytracer(int screenWidth, int screenHeight) :
+	Raytracer(unsigned int screenWidth, unsigned int screenHeight) :
 			screenWidth(screenWidth), screenHeight(screenHeight) {
 	}
 	;
@@ -28,8 +28,8 @@ private:
 
 	std::vector<RayObject*> objects;
 
-	int screenWidth;
-	int screenHeight;
+	unsigned int screenWidth;
+	unsigned int screenHeight;
 };
 
 #endif

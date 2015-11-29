@@ -87,10 +87,10 @@ Vec3f Raytracer::trace(const Vec3f &rayorig, const Vec3f &raydir,
 	// the inside bool to true. Finally reverse the sign of IdotN which we want
 	// positive.
 	float bias = 1e-4;  // add some bias to the point from which we will be tracing
-	bool inside = false;
+	//bool inside = false;
 	if (raydir.dot(nhit) > 0)
-		nhit = -nhit, inside = true;
-	if ((object->transparency > 0 || object->reflection > 0)
+		nhit = -nhit;//, inside = true;
+	if ((object->reflection > 0)// || object->transparency > 0)
 			&& depth < MAX_RAY_DEPTH) {
 		float facingratio = -raydir.dot(nhit);
 		// change the mix value to tweak the effect
@@ -100,19 +100,19 @@ Vec3f Raytracer::trace(const Vec3f &rayorig, const Vec3f &raydir,
 		Vec3f refldir = raydir - nhit * 2 * raydir.dot(nhit);
 		refldir.normalize();
 		Vec3f reflection = trace(phit + nhit * bias, refldir, depth + 1);
-		Vec3f refraction = 0;
+		//Vec3f refraction = 0;
 		// if the sphere is also transparent compute refraction ray (transmission)
-		if (object->transparency) {
+		/*if (object->transparency) {
 			float ior = 1.1, eta = (inside) ? ior : 1 / ior;  // are we inside or outside the surface?
 			float cosi = -nhit.dot(raydir);
 			float k = 1 - eta * eta * (1 - cosi * cosi);
 			Vec3f refrdir = raydir * eta + nhit * (eta * cosi - sqrt(k));
 			refrdir.normalize();
 			refraction = trace(phit - nhit * bias, refrdir, depth + 1);
-		}
+		}*/
 		// the result is a mix of reflection and refraction (if the sphere is transparent)
-		surfaceColor = (reflection * fresneleffect
-				+ refraction * (1 - fresneleffect) * object->transparency)
+		surfaceColor = reflection * fresneleffect
+			//	+ refraction * (1 - fresneleffect) * object->transparency)
 				* object->surfaceColor;
 	} else {
 		// it's a diffuse object, no need to raytrace any further
@@ -165,18 +165,8 @@ void Raytracer::render(unsigned int* imageData) {
 					| (int) (std::min(float(1), pixel.z) * 255);
 		}
 	}
-	/*
-	 // Save result to a PPM image (keep these flags if you compile under Windows)
-	 std::ofstream ofs("./untitled.ppm", std::ios::out | std::ios::binary);
-	 ofs << "P6\n" << width << " " << height << "\n255\n";
-	 for (unsigned i = 0; i < width * height; ++i) {
-	 ofs << (unsigned char) (std::min(float(1), image[i].x) * 255)
-	 << (unsigned char) (std::min(float(1), image[i].y) * 255)
-	 << (unsigned char) (std::min(float(1), image[i].z) * 255);
 
-	 }
-	 ofs.close();
-	 delete[] image;*/
+  objects[1]->center.z -= 0.5; //TODO remove, only for testing
 }
 
 void Raytracer::generateSimpleScene() {

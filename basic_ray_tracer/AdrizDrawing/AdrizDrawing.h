@@ -87,7 +87,7 @@ int draw_box (int horiz_start, int vert_start, int horiz_end, int vert_end, int 
 int draw_circle(int Hcenter, int Vcenter, int radius, int color, char fill, void* display);
 int draw_round_corner_box ( int horiz_start, int vert_start, int horiz_end, int vert_end,int radius, int color, int fill, void* display);
 int print_char (int horiz_offset, int vert_offset, int color, char character, char *font, void* display);
-int print_string(int horiz_offset, int vert_offset, int color, char *font, void* display, char string[]);
+//int print_string(int horiz_offset, int vert_offset, int color, char *font, void* display, char string[]);
 int get_size_width_text(struct abc_font_struct font[], char string[]);
 int print_string_alpha(int horiz_offset, int vert_offset, int color, int background_color, struct abc_font_struct font[], void * display, char string[]);
 int print_char_alpha (int horiz_offset, int vert_offset, int color, char character, int background_color, struct abc_font_struct font[], void * display);
