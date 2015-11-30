@@ -71,7 +71,7 @@ Vec3f Raytracer::trace(const Vec3f &rayorig, const Vec3f &raydir,
 	}
 	// if there's no intersection return black or background color
 	if (!object)
-		return {3,3,3};
+		return generateVector(3);
 	Vec3f surfaceColor = { 0, 0, 0 };  // color of the ray/surfaceof the object intersected by the ray
 	Vec3f phit = mul(add(rayorig, raydir), tnear);  // point of intersection
 	Vec3f nhit = sub(phit, object->center);  // normal at the intersection point
@@ -82,7 +82,7 @@ Vec3f Raytracer::trace(const Vec3f &rayorig, const Vec3f &raydir,
 	// positive.
 	float bias = 1e-4;  // add some bias to the point from which we will be tracing
 	if (dot(raydir, nhit) > 0)
-		nhit = sub( { 0, 0, 0 }, nhit);  //, inside = true;
+		nhit = sub(generateVector(0), nhit);  //, inside = true;
 	if ((object->reflection > 0) && depth < MAX_RAY_DEPTH) {
 		float facingratio = -dot(raydir, nhit);
 		// change the mix value to tweak the effect
@@ -107,7 +107,7 @@ Vec3f Raytracer::trace(const Vec3f &rayorig, const Vec3f &raydir,
 						float t0, t1;
 						if (intersect(objects[j], add(phit, mul(nhit, bias)),
 								lightDirection, t0, t1)) {
-							transmission = {0,0,0};
+							transmission = generateVector(0);
 							break;
 						}
 					}
@@ -142,7 +142,7 @@ void Raytracer::render(unsigned int* imageData) {
 			float yy = (1 - 2 * ((y + 0.5) * invHeight)) * angle;
 			Vec3f raydir = { xx, yy, -1 };
 			normalize(raydir);
-			pixel = trace( { 0, 0, 0 }, raydir, 0);
+			pixel = trace(generateVector(0), raydir, 0);
 			*imageData++ = (int) (std::min(float(1), pixel.x) * 255) << 16
 					| (int) (std::min(float(1), pixel.y) * 255) << 8
 					| (int) (std::min(float(1), pixel.z) * 255);
@@ -153,24 +153,25 @@ void Raytracer::render(unsigned int* imageData) {
 }
 
 void Raytracer::generateSimpleScene() {
-	objects.push_back(generateSphere( { 0.0, -10004, -20 }, 10000, { 0.20, 0.20,
-			0.20 }, 0, { 0, 0, 0 }));
 	objects.push_back(
-			generateSphere( { 0.0, 0, -20 }, 4, { 1.00, 0.32, 0.36 }, 1,
-					{ 0, 0, 0 }));
+			generateSphere(generateVector(0.0, -10004, -20), 10000,
+					generateVector(0.20, 0.20, 0.20), 0, generateVector(0)));
 	objects.push_back(
-			generateSphere( { 5.0, -1, -15 }, 2, { 0.90, 0.76, 0.46 }, 1,
-					{ 0, 0, 0 }));
+			generateSphere(generateVector(0.0, 0, -20), 4,
+					generateVector(1.00, 0.32, 0.36), 1, generateVector(0)));
 	objects.push_back(
-			generateSphere( { 5.0, 0, -25 }, 3, { 0.65, 0.77, 0.97 }, 1,
-					{ 0, 0, 0 }));
+			generateSphere(generateVector(5.0, -1, -15), 2,
+					generateVector(0.90, 0.76, 0.46), 1, generateVector(0)));
 	objects.push_back(
-			generateSphere( { -5.5, 0, -15 }, 3, { 0.90, 0.90, 0.90 }, 1,
-					{ 0, 0, 0 }));
+			generateSphere(generateVector(5.0, 0, -25), 3,
+					generateVector(0.65, 0.77, 0.97), 1, generateVector(0)));
+	objects.push_back(
+			generateSphere(generateVector(-5.5, 0, -15), 3,
+					generateVector(0.90, 0.90, 0.90), 1, generateVector(0)));
 	// light
 	objects.push_back(
-			generateSphere( { 0.0, 20, -30 }, 3, { 0.00, 0.00, 0.00 }, 0,
-					{ 3, 3, 3 }));
+			generateSphere(generateVector(0.0, 20, -30), 3,
+					generateVector(0.00, 0.00, 0.00), 0, generateVector(3)));
 }
 
 Vec3f Raytracer::parseVector(string line) {
@@ -186,8 +187,8 @@ Vec3f Raytracer::parseVector(string line) {
 	pos2 = line.find("\"", pos) - pos;
 	string number3 = line.substr(pos, line.find("\"", pos) - pos);
 
-	return {atof(number1.c_str()), atof(number2.c_str()),
-		atof(number3.c_str())};
+	return generateVector(
+			atof(number1.c_str()), atof(number2.c_str()), atof(number3.c_str()));
 }
 
 float Raytracer::parseFloat(string line) {

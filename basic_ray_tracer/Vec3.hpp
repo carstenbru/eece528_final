@@ -9,6 +9,9 @@ typedef struct {
 	float z;
 } Vec3f;
 
+Vec3f generateVector(float x, float y, float z);
+Vec3f generateVector(float val);
+
 float dot(const Vec3f &v1, const Vec3f &v2);
 Vec3f& normalize(Vec3f &v);
 float length2(const Vec3f &v);
