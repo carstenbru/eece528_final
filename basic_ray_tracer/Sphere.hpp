@@ -14,7 +14,7 @@ typedef struct {
 } Sphere;
 
 Sphere* generateSphere(const Vec3f &c, const float &r, const Vec3f &sc,
-		const float &refl = 0, const Vec3f &ec = 0);
+		const float &refl, const Vec3f &ec);
 bool intersect(Sphere* sphere, const Vec3f &rayorig, const Vec3f &raydir,
 		float &t0, float &t1);
 

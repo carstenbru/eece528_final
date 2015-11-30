@@ -17,11 +17,11 @@ Sphere* generateSphere(const Vec3f &c, const float &r, const Vec3f &sc,
 
 bool intersect(Sphere* sphere, const Vec3f &rayorig, const Vec3f &raydir,
 		float &t0, float &t1) {
-	Vec3f l = sphere->center - rayorig;
-	float tca = l.dot(raydir);
+	Vec3f l = sub(sphere->center, rayorig);
+	float tca = dot(l,raydir);
 	if (tca < 0)
 		return false;
-	float d2 = l.dot(l) - tca * tca;
+	float d2 = dot(l,l) - tca * tca;
 	if (d2 > sphere->radius2)
 		return false;
 	float thc = sqrt(sphere->radius2 - d2);

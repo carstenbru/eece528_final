@@ -24,13 +24,8 @@
 
 #include "Raytracer.hpp"
 
-//#include <stdlib.h>
 #include <algorithm>
-//#include <cassert>
-//#include <cstdio>
-//#include <cstdlib>
 #include <fstream>
-//#include <iosfwd>
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -76,55 +71,58 @@ Vec3f Raytracer::trace(const Vec3f &rayorig, const Vec3f &raydir,
 	}
 	// if there's no intersection return black or background color
 	if (!object)
-		return Vec3f(3);
-	Vec3f surfaceColor = 0;  // color of the ray/surfaceof the object intersected by the ray
-	Vec3f phit = rayorig + raydir * tnear;  // point of intersection
-	Vec3f nhit = phit - object->center;  // normal at the intersection point
-	nhit.normalize();  // normalize normal direction
+		return {3,3,3};
+	Vec3f surfaceColor = { 0, 0, 0 };  // color of the ray/surfaceof the object intersected by the ray
+	Vec3f phit = mul(add(rayorig, raydir), tnear);  // point of intersection
+	Vec3f nhit = sub(phit, object->center);  // normal at the intersection point
+	normalize(nhit);  // normalize normal direction
 	// If the normal and the view direction are not opposite to each other
 	// reverse the normal direction. That also means we are inside the sphere so set
 	// the inside bool to true. Finally reverse the sign of IdotN which we want
 	// positive.
 	float bias = 1e-4;  // add some bias to the point from which we will be tracing
-	if (raydir.dot(nhit) > 0)
-		nhit = -nhit;  //, inside = true;
+	if (dot(raydir, nhit) > 0)
+		nhit = sub( { 0, 0, 0 }, nhit);  //, inside = true;
 	if ((object->reflection > 0) && depth < MAX_RAY_DEPTH) {
-		float facingratio = -raydir.dot(nhit);
+		float facingratio = -dot(raydir, nhit);
 		// change the mix value to tweak the effect
 		float fresneleffect = mix(pow(1 - facingratio, 3), 1, 0.1);
 		// compute reflection direction (not need to normalize because all vectors
 		// are already normalized)
-		Vec3f refldir = raydir - nhit * 2 * raydir.dot(nhit);
-		refldir.normalize();
-		Vec3f reflection = trace(phit + nhit * bias, refldir, depth + 1);
+		Vec3f refldir = mul(sub(raydir, nhit), 2 * dot(raydir, nhit));
+		normalize(refldir);
+		Vec3f reflection = trace(add(phit, mul(nhit, bias)), refldir, depth + 1);
 		// the result is a mix of reflection and refraction (if the sphere is transparent)
-		surfaceColor = reflection * fresneleffect * object->surfaceColor;
+		surfaceColor = mul(object->surfaceColor, mul(reflection, fresneleffect));
 	} else {
 		// it's a diffuse object, no need to raytrace any further
 		for (unsigned i = 0; i < objects.size(); ++i) {
 			if (objects[i]->emissionColor.x > 0) {
 				// this is a light
-				Vec3f transmission = 1;
-				Vec3f lightDirection = objects[i]->center - phit;
-				lightDirection.normalize();
+				Vec3f transmission = { 1, 1, 1 };
+				Vec3f lightDirection = sub(objects[i]->center, phit);
+				normalize(lightDirection);
 				for (unsigned j = 0; j < objects.size(); ++j) {
 					if (i != j) {
 						float t0, t1;
-						if (intersect(objects[j], phit + nhit * bias, lightDirection, t0,
-								t1)) {
-							transmission = 0;
+						if (intersect(objects[j], add(phit, mul(nhit, bias)),
+								lightDirection, t0, t1)) {
+							transmission = {0,0,0};
 							break;
 						}
 					}
 				}
-				surfaceColor += object->surfaceColor * transmission
-						* std::max(float(0), nhit.dot(lightDirection))
-						* objects[i]->emissionColor;
+				surfaceColor = add(surfaceColor,
+						mul(
+								mul(object->surfaceColor,
+										mul(transmission,
+												std::max(float(0), dot(nhit, lightDirection)))),
+								objects[i]->emissionColor));
 			}
 		}
 	}
 
-	return surfaceColor + object->emissionColor;
+	return add(surfaceColor, object->emissionColor);
 }
 
 //[comment]
@@ -142,9 +140,9 @@ void Raytracer::render(unsigned int* imageData) {
 		for (unsigned x = 0; x < screenWidth; ++x) {
 			float xx = (2 * ((x + 0.5) * invWidth) - 1) * angle * aspectratio;
 			float yy = (1 - 2 * ((y + 0.5) * invHeight)) * angle;
-			Vec3f raydir(xx, yy, -1);
-			raydir.normalize();
-			pixel = trace(Vec3f(0), raydir, 0);
+			Vec3f raydir = { xx, yy, -1 };
+			normalize(raydir);
+			pixel = trace( { 0, 0, 0 }, raydir, 0);
 			*imageData++ = (int) (std::min(float(1), pixel.x) * 255) << 16
 					| (int) (std::min(float(1), pixel.y) * 255) << 8
 					| (int) (std::min(float(1), pixel.z) * 255);
@@ -155,21 +153,24 @@ void Raytracer::render(unsigned int* imageData) {
 }
 
 void Raytracer::generateSimpleScene() {
+	objects.push_back(generateSphere( { 0.0, -10004, -20 }, 10000, { 0.20, 0.20,
+			0.20 }, 0, { 0, 0, 0 }));
 	objects.push_back(
-			generateSphere(Vec3f(0.0, -10004, -20), 10000, Vec3f(0.20, 0.20, 0.20),
-					0));
+			generateSphere( { 0.0, 0, -20 }, 4, { 1.00, 0.32, 0.36 }, 1,
+					{ 0, 0, 0 }));
 	objects.push_back(
-			generateSphere(Vec3f(0.0, 0, -20), 4, Vec3f(1.00, 0.32, 0.36), 1));
+			generateSphere( { 5.0, -1, -15 }, 2, { 0.90, 0.76, 0.46 }, 1,
+					{ 0, 0, 0 }));
 	objects.push_back(
-			generateSphere(Vec3f(5.0, -1, -15), 2, Vec3f(0.90, 0.76, 0.46), 1));
+			generateSphere( { 5.0, 0, -25 }, 3, { 0.65, 0.77, 0.97 }, 1,
+					{ 0, 0, 0 }));
 	objects.push_back(
-			generateSphere(Vec3f(5.0, 0, -25), 3, Vec3f(0.65, 0.77, 0.97), 1));
-	objects.push_back(
-			generateSphere(Vec3f(-5.5, 0, -15), 3, Vec3f(0.90, 0.90, 0.90), 1));
+			generateSphere( { -5.5, 0, -15 }, 3, { 0.90, 0.90, 0.90 }, 1,
+					{ 0, 0, 0 }));
 	// light
 	objects.push_back(
-			generateSphere(Vec3f(0.0, 20, -30), 3, Vec3f(0.00, 0.00, 0.00), 0,
-					Vec3f(3)));
+			generateSphere( { 0.0, 20, -30 }, 3, { 0.00, 0.00, 0.00 }, 0,
+					{ 3, 3, 3 }));
 }
 
 Vec3f Raytracer::parseVector(string line) {
@@ -185,9 +186,8 @@ Vec3f Raytracer::parseVector(string line) {
 	pos2 = line.find("\"", pos) - pos;
 	string number3 = line.substr(pos, line.find("\"", pos) - pos);
 
-	cout << "vec: " << number1 << " " << number2 << " " << atof(number3.c_str()) << endl;
-	return Vec3f(atof(number1.c_str()), atof(number2.c_str()),
-			atof(number3.c_str()));
+	return {atof(number1.c_str()), atof(number2.c_str()),
+		atof(number3.c_str())};
 }
 
 float Raytracer::parseFloat(string line) {
@@ -209,11 +209,11 @@ void Raytracer::parseScene(ifstream& in) {
 }
 
 void Raytracer::parseSphere(ifstream& in) {
-	Vec3f center = 0;
+	Vec3f center = { 0, 0, 0 };
 	float radius = 0;
-	Vec3f surfaceColor = 0;
+	Vec3f surfaceColor = { 0, 0, 0 };
 	float reflection = 0;
-	Vec3f emissionColor = 0;
+	Vec3f emissionColor = { 0, 0, 0 };
 
 	string line;
 	while (getline(in, line)) {

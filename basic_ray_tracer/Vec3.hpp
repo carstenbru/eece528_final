@@ -3,7 +3,21 @@
 #ifndef VEC3_HPP_
 #define VEC3_HPP_
 
-template<typename T>
+typedef struct {
+	float x;
+	float y;
+	float z;
+} Vec3f;
+
+float dot(const Vec3f &v1, const Vec3f &v2);
+Vec3f& normalize(Vec3f &v);
+float length2(const Vec3f &v);
+Vec3f sub(const Vec3f &v1, const Vec3f &v2);
+Vec3f add(const Vec3f &v1, const Vec3f &v2);
+Vec3f mul(const Vec3f &v1, float mul);
+Vec3f mul(const Vec3f &v1, const Vec3f &v2);
+
+/*template<typename T>
 class Vec3 {
 public:
 	T x, y, z;
@@ -62,6 +76,6 @@ public:
 	}
 };
 
-typedef Vec3<float> Vec3f;
+typedef Vec3<float> Vec3f;*/
 
 #endif

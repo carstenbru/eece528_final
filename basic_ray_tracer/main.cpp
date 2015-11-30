@@ -24,6 +24,7 @@ int main(int argc, char **argv) {
 	IBMP * frame;
 	frame = create_surface(width, height);
 
+	//OpenCL_Raytracer raytracer(width, height);
 	Raytracer raytracer(width, height);
 	raytracer.loadScene("scene/simple.xml");
 	//raytracer.generateSimpleScene();
