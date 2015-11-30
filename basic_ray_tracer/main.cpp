@@ -1,4 +1,5 @@
 #include "Raytracer.hpp"
+#include "OpenCL_Raytracer.hpp"
 #include "Sphere.hpp"
 
 #include <iostream>

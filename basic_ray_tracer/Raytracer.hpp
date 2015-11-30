@@ -4,7 +4,7 @@
 #include <fstream>
 
 #include "Vec3.hpp"
-#include "RayObject.hpp"
+#include "Sphere.hpp"
 
 #ifndef RAYTRACER_HPP_
 #define RAYTRACER_HPP_
@@ -14,8 +14,9 @@ public:
 	Raytracer(unsigned int screenWidth, unsigned int screenHeight) :
 			screenWidth(screenWidth), screenHeight(screenHeight) {
 	}
-	;
-	void render(unsigned int* imageData);
+	virtual ~Raytracer() {}
+	virtual void render(unsigned int* imageData);
+
 	void loadScene(std::string filename);
 	void generateSimpleScene();
 
@@ -26,7 +27,7 @@ private:
 	Vec3f parseVector(std::string line);
 	float parseFloat(std::string line);
 
-	std::vector<RayObject*> objects;
+	std::vector<Sphere*> objects;
 
 	unsigned int screenWidth;
 	unsigned int screenHeight;
