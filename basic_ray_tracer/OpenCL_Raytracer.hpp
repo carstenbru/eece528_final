@@ -12,10 +12,6 @@ public:
 	}
 
 	virtual void render(unsigned int* imageData);
-
-private:
-	Vec3f trace_openCL(const Vec3f &rayorig, const Vec3f &raydir,
-			const int &depth);
 };
 
 #endif

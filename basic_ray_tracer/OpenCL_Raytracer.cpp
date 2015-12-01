@@ -9,9 +9,8 @@
 using namespace std;
 
 void OpenCL_Raytracer::render(unsigned int* imageData) {
-	char buf[] = "Hello, World!";
-	char build_c[4096];
-	size_t srcsize, worksize = strlen(buf);
+	char build_c[65535*8];
+	size_t srcsize;
 
 	cl_int error;
 	cl_platform_id platform;
@@ -134,9 +133,4 @@ void OpenCL_Raytracer::render(unsigned int* imageData) {
 	/* Finally, output the result */
 	//TODO
 	cout << "OpenCL Raytracer finished!" << endl; //TODO remove
-}
-
-Vec3f OpenCL_Raytracer::trace_openCL(const Vec3f &rayorig, const Vec3f &raydir,
-		const int &depth) {
-//TODO
 }
