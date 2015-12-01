@@ -12,13 +12,13 @@ typedef struct {
 Vec3f generateVector(float x, float y, float z);
 Vec3f generateVector(float val);
 
-float dot(const Vec3f &v1, const Vec3f &v2);
-Vec3f& normalize(Vec3f &v);
-float length2(const Vec3f &v);
-Vec3f sub(const Vec3f &v1, const Vec3f &v2);
-Vec3f add(const Vec3f &v1, const Vec3f &v2);
-Vec3f mul(const Vec3f &v1, float mul);
-Vec3f mul(const Vec3f &v1, const Vec3f &v2);
+float dot(const Vec3f v1, const Vec3f v2);
+Vec3f* normalize(Vec3f* v);
+float length2(const Vec3f v);
+Vec3f sub(const Vec3f v1, const Vec3f v2);
+Vec3f add(const Vec3f v1, const Vec3f v2);
+Vec3f mul(const Vec3f v1, float mul);
+Vec3f mul(const Vec3f v1, const Vec3f v2);
 
 /*template<typename T>
 class Vec3 {

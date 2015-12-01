@@ -15,8 +15,8 @@ Sphere* generateSphere(const Vec3f &c, const float &r, const Vec3f &sc,
 	return s;
 }
 
-bool intersect(Sphere* sphere, const Vec3f &rayorig, const Vec3f &raydir,
-		float &t0, float &t1) {
+bool intersect(Sphere* sphere, const Vec3f rayorig, const Vec3f raydir,
+		float* t0, float* t1) {
 	Vec3f l = sub(sphere->center, rayorig);
 	float tca = dot(l,raydir);
 	if (tca < 0)
@@ -25,8 +25,8 @@ bool intersect(Sphere* sphere, const Vec3f &rayorig, const Vec3f &raydir,
 	if (d2 > sphere->radius2)
 		return false;
 	float thc = sqrt(sphere->radius2 - d2);
-	t0 = tca - thc;
-	t1 = tca + thc;
+	*t0 = tca - thc;
+	*t1 = tca + thc;
 
 	return true;
 }

@@ -60,7 +60,7 @@ Vec3f Raytracer::trace(const Vec3f &rayorig, const Vec3f &raydir,
 	// find intersection of this ray with the sphere in the scene
 	for (unsigned i = 0; i < objects.size(); ++i) {
 		float t0 = INFINITY, t1 = INFINITY;
-		if (intersect(objects[i], rayorig, raydir, t0, t1)) {
+		if (intersect(objects[i], rayorig, raydir, &t0, &t1)) {
 			if (t0 < 0)
 				t0 = t1;
 			if (t0 < tnear) {
@@ -75,7 +75,7 @@ Vec3f Raytracer::trace(const Vec3f &rayorig, const Vec3f &raydir,
 	Vec3f surfaceColor = { 0, 0, 0 };  // color of the ray/surfaceof the object intersected by the ray
 	Vec3f phit = mul(add(rayorig, raydir), tnear);  // point of intersection
 	Vec3f nhit = sub(phit, object->center);  // normal at the intersection point
-	normalize(nhit);  // normalize normal direction
+	normalize(&nhit);  // normalize normal direction
 	// If the normal and the view direction are not opposite to each other
 	// reverse the normal direction. That also means we are inside the sphere so set
 	// the inside bool to true. Finally reverse the sign of IdotN which we want
@@ -90,7 +90,7 @@ Vec3f Raytracer::trace(const Vec3f &rayorig, const Vec3f &raydir,
 		// compute reflection direction (not need to normalize because all vectors
 		// are already normalized)
 		Vec3f refldir = mul(sub(raydir, nhit), 2 * dot(raydir, nhit));
-		normalize(refldir);
+		normalize(&refldir);
 		Vec3f reflection = trace(add(phit, mul(nhit, bias)), refldir, depth + 1);
 		// the result is a mix of reflection and refraction (if the sphere is transparent)
 		surfaceColor = mul(object->surfaceColor, mul(reflection, fresneleffect));
@@ -101,12 +101,12 @@ Vec3f Raytracer::trace(const Vec3f &rayorig, const Vec3f &raydir,
 				// this is a light
 				Vec3f transmission = { 1, 1, 1 };
 				Vec3f lightDirection = sub(objects[i]->center, phit);
-				normalize(lightDirection);
+				normalize(&lightDirection);
 				for (unsigned j = 0; j < objects.size(); ++j) {
 					if (i != j) {
 						float t0, t1;
 						if (intersect(objects[j], add(phit, mul(nhit, bias)),
-								lightDirection, t0, t1)) {
+								lightDirection, &t0, &t1)) {
 							transmission = generateVector(0);
 							break;
 						}
@@ -141,7 +141,7 @@ void Raytracer::render(unsigned int* imageData) {
 			float xx = (2 * ((x + 0.5) * invWidth) - 1) * angle * aspectratio;
 			float yy = (1 - 2 * ((y + 0.5) * invHeight)) * angle;
 			Vec3f raydir = { xx, yy, -1 };
-			normalize(raydir);
+			normalize(&raydir);
 			pixel = trace(generateVector(0), raydir, 0);
 			*imageData++ = (int) (std::min(float(1), pixel.x) * 255) << 16
 					| (int) (std::min(float(1), pixel.y) * 255) << 8
