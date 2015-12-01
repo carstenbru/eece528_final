@@ -20,7 +20,7 @@ public:
 	void loadScene(std::string filename);
 	void generateSimpleScene();
 
-private:
+protected:
 	Vec3f trace(const Vec3f &rayorig, const Vec3f &raydir, const int &depth);
 	void parseScene(std::ifstream& in);
 	void parseSphere(std::ifstream& in);

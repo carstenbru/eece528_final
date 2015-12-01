@@ -1,10 +1,12 @@
-
 #include <CL/cl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <iostream>
 
 #include "OpenCL_Raytracer.hpp"
+
+using namespace std;
 
 void OpenCL_Raytracer::render(unsigned int* imageData) {
 	char buf[] = "Hello, World!";
@@ -63,18 +65,20 @@ void OpenCL_Raytracer::render(unsigned int* imageData) {
 		printf("\n Error number %d", error);
 		fprintf( stdout, "\nRequestingInfo\n");
 		clGetProgramBuildInfo(prog, device, CL_PROGRAM_BUILD_LOG, 4096, build_c,
-				NULL);
+		NULL);
 		printf("Build Log for %s_program:\n%s\n", "example", build_c);
 	}
 
 	/* Create memory buffers in the Context where the desired Device is. These will be the pointer
 	 parameters on the kernel. */
-	cl_mem mem1, mem2;
-	mem1 = clCreateBuffer(context, CL_MEM_READ_ONLY, worksize, NULL, &error);
+	cl_mem scene, frame;
+	int sceneSize = objects.size() * sizeof(Sphere);
+	int frameSize = screenWidth * screenHeight * sizeof(unsigned int);
+	scene = clCreateBuffer(context, CL_MEM_READ_ONLY, sceneSize, NULL, &error);
 	if (error != CL_SUCCESS) {
 		printf("\n Error number %d", error);
 	}
-	mem2 = clCreateBuffer(context, CL_MEM_WRITE_ONLY, worksize, NULL, &error);
+	frame = clCreateBuffer(context, CL_MEM_WRITE_ONLY, frameSize, NULL, &error);
 	if (error != CL_SUCCESS) {
 		printf("\n Error number %d", error);
 	}
@@ -85,45 +89,51 @@ void OpenCL_Raytracer::render(unsigned int* imageData) {
 	}
 
 	/* Set the kernel parameters */
-	error = clSetKernelArg(k_example, 0, sizeof(mem1), &mem1);
+	error = clSetKernelArg(k_example, 0, sizeof(scene), &scene);
 	if (error != CL_SUCCESS) {
 		printf("\n Error number %d", error);
 	}
-	error = clSetKernelArg(k_example, 1, sizeof(mem2), &mem2);
+	int scene_objects = objects.size();
+	error = clSetKernelArg(k_example, 1, sizeof(int), &scene_objects);
+		if (error != CL_SUCCESS) {
+			printf("\n Error number %d", error);
+		}
+	error = clSetKernelArg(k_example, 2, sizeof(frame), &frame);
 	if (error != CL_SUCCESS) {
 		printf("\n Error number %d", error);
 	}
-	/* Create a char array in where to store the results of the Kernel */
-	char buf2[sizeof buf];
-	buf2[0] = '?';
-	buf2[worksize] = 0;
 
 	/* Send input data to OpenCL (async, don't alter the buffer!) */
-	error = clEnqueueWriteBuffer(cq, mem1, CL_FALSE, 0, worksize, buf, 0, NULL,
-			NULL);
-	if (error != CL_SUCCESS) {
-		printf("\n Error number %d", error);
+	for (unsigned int i = 0; i < objects.size(); i++) {
+		error = clEnqueueWriteBuffer(cq, scene, CL_FALSE, i * sizeof(Sphere),
+				sizeof(Sphere), objects[i], 0, NULL,
+				NULL);
+		if (error != CL_SUCCESS) {
+			printf("\n Error number %d", error);
+		}
 	}
 	/* Tell the Device, through the command queue, to execute the Kernel */
-	error = clEnqueueNDRangeKernel(cq, k_example, 1, NULL, &worksize, &worksize,
+	size_t global_item_size[2] = { screenWidth, screenHeight};
+	error = clEnqueueNDRangeKernel(cq, k_example, 2, NULL, global_item_size, NULL,
 			0, NULL, NULL);
 	if (error != CL_SUCCESS) {
 		printf("\n Error number %d", error);
 	}
 	/* Read the result back into buf2 */
-	error = clEnqueueReadBuffer(cq, mem2, CL_FALSE, 0, worksize, buf2, 0, NULL,
-			NULL);
-	if (error != CL_SUCCESS) {
-		printf("\n Error number %d", error);
-	}
+	error = clEnqueueReadBuffer(cq, frame, CL_FALSE, 0, frameSize, imageData, 0,
+	 NULL,
+	 NULL);
+	 if (error != CL_SUCCESS) {
+	 printf("\n Error number %d", error);
+	 }
 	/* Await completion of all the above */
 	error = clFinish(cq);
 	if (error != CL_SUCCESS) {
 		printf("\n Error number %d", error);
 	}
 	/* Finally, output the result */
-	puts(buf2);
 	//TODO
+	cout << "OpenCL Raytracer finished!" << endl; //TODO remove
 }
 
 Vec3f OpenCL_Raytracer::trace_openCL(const Vec3f &rayorig, const Vec3f &raydir,
