@@ -96,8 +96,11 @@ bool intersect(Sphere* sphere, const Vec3f rayorig, const Vec3f raydir,
 	return true;
 }
 
-Vec3f trace(Sphere* scene, int scene_size, const Vec3f rayorig, const Vec3f raydir,
-		const int depth) {
+Vec3f trace(Sphere* scene, int scene_size, Vec3f rayorig, Vec3f raydir) {
+    Vec3f resColor = generateVector3(0);
+    Vec3f mulColor = generateVector3(1);
+    int stop = 0;
+    for (int rec_depth = 0; rec_depth <= MAX_RAY_DEPTH; rec_depth++) {
 	float tnear = INFINITY;
 	const Sphere* object = 0;
 	// find intersection of this ray with the sphere in the scene
@@ -113,13 +116,78 @@ Vec3f trace(Sphere* scene, int scene_size, const Vec3f rayorig, const Vec3f rayd
 		}
 	}
 	
-	if (!object)
-		return generateVector3(3);
-        return object->surfaceColor; //TODO rest of algorithm..
+	if (!object) {
+            resColor = add(resColor, mulf(mulColor, 3));
+            break;
+        }
+        
+	Vec3f phit = mulf(add(rayorig, raydir), tnear);  // point of intersection
+	Vec3f nhit = sub(phit, object->center);  // normal at the intersection point
+	normalize_cl(&nhit);  // normalize normal direction
+	// If the normal and the view direction are not opposite to each other
+	// reverse the normal direction. That also means we are inside the sphere so set
+	// the inside bool to true. Finally reverse the sign of IdotN which we want
+	// positive.
+	float bias = 1e-4;  // add some bias to the point from which we will be tracing
+	if (dot_cl(raydir, nhit) > 0)
+		nhit = sub(generateVector3(0), nhit);  //, inside = true;
+	if ((object->reflection > 0) && rec_depth < MAX_RAY_DEPTH) {
+		float facingratio = -dot_cl(raydir, nhit);
+		// change the mix value to tweak the effect
+		float fresneleffect = mix_cl(pow(1 - facingratio, 3), 1, 0.1);
+		// compute reflection direction (not need to normalize because all vectors
+		// are already normalized)
+		raydir = mulf(sub(raydir, nhit), 2 * dot_cl(raydir, nhit));
+		normalize_cl(&raydir);
+                
+                rayorig = add(phit, mulf(nhit, bias)); //set rays for next iteration (recursion)
+                
+		//Vec3f reflection = generateVector3(1);//trace(scene, scene_size, add(phit, mulf(nhit, bias)), refldir, depth + 1); //TODO
+		// the result is a mix of reflection and refraction (if the sphere is transparent)
+		//surfaceColor = mul(object->surfaceColor, mulf(reflection, fresneleffect));
+                //stop = 1; //TODO
+                resColor = add(resColor, mul(mulColor, object->emissionColor));
+                mulColor = mul(mulColor, mulf(object->surfaceColor, fresneleffect));
+	} else {
+		// it's a diffuse object, no need to raytrace any further
+                Vec3f surfaceColor = generateVector3(0);
+		for (unsigned i = 0; i < scene_size; ++i) {
+			if ((scene+i)->emissionColor.x > 0) {
+				// this is a light
+				Vec3f transmission = { 1, 1, 1 };
+				Vec3f lightDirection = sub((scene+i)->center, phit);
+				normalize_cl(&lightDirection);
+				for (unsigned j = 0; j < scene_size; ++j) {
+					if (i != j) {
+						float t0, t1;
+						if (intersect((scene+j), add(phit, mulf(nhit, bias)),
+								lightDirection, &t0, &t1)) {
+							transmission = generateVector3(0);
+							break;
+						}
+					}
+				}
+				surfaceColor = add(surfaceColor, mul(
+								mul(object->surfaceColor,
+										mulf(transmission,
+												max((float)(0), dot_cl(nhit, lightDirection)))),
+								(scene+i)->emissionColor));
+			}
+		}
+		resColor = add(resColor, mul(mulColor, surfaceColor));
+		stop = 1;
+	}
+	//resColor = add(resColor, add(surfaceColor, object->emissionColor));
+        if (stop) {
+            break;
+        }
+    }
+        
+        return resColor; //TODO rest of algorithm..
 	
 }
 
-__kernel void example(Sphere* scene, int scene_size, __global unsigned int* frame ){
+__kernel void trace_cl(Sphere* scene, int scene_size, __global unsigned int* frame ){
        int x = get_global_id(0);
        int y = get_global_id(1);
        int screenWidth = get_global_size(0);
@@ -136,7 +204,7 @@ __kernel void example(Sphere* scene, int scene_size, __global unsigned int* fram
        Vec3f raydir = { xx, yy, -1 };
        normalize_cl(&raydir);
        
-       Vec3f pixel = trace(scene, scene_size, generateVector3(0), raydir, 0);       
+       Vec3f pixel = trace(scene, scene_size, generateVector3(0), raydir);       
        
        *(frame + x + y*screenWidth) = (min(255, (int)(pixel.x*255)) << 16) | (min(255, (int)(pixel.y*255)) << 8) | (min(255, (int)(pixel.z*255)));
 }

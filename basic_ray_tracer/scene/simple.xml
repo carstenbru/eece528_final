@@ -16,7 +16,6 @@
         <radius value="2"/>
         <surfaceColor r="0.9" g="0.76" b="0.46"/>
         <reflection value="1"/>
-        <transparency value="0.0"/>
     </Sphere>
     <Sphere>
         <center x="5.0" y="0" z="-25"/>

@@ -1,4 +1,3 @@
-#include <CL/cl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,8 +7,10 @@
 
 using namespace std;
 
-void OpenCL_Raytracer::render(unsigned int* imageData) {
-	char build_c[65535*8];
+OpenCL_Raytracer::OpenCL_Raytracer(unsigned int screenWidth,
+		unsigned int screenHeight) :
+		Raytracer(screenWidth, screenHeight) {
+	char build_c[65535 * 8];
 	size_t srcsize;
 
 	cl_int error;
@@ -32,13 +33,12 @@ void OpenCL_Raytracer::render(unsigned int* imageData) {
 	cl_context_properties properties[] = { CL_CONTEXT_PLATFORM,
 			(cl_context_properties) platform, 0 };
 	/* Note that nVidia's OpenCL requires the platform property */
-	cl_context context = clCreateContext(properties, 1, &device, NULL, NULL,
-			&error);
+	context = clCreateContext(properties, 1, &device, NULL, NULL, &error);
 	if (error != CL_SUCCESS) {
 		printf("\n Error number %d", error);
 	}
 	/* Create a command queue to communicate with the device */
-	cl_command_queue cq = clCreateCommandQueue(context, device, 0, &error);
+	command_queue = clCreateCommandQueue(context, device, 0, &error);
 	if (error != CL_SUCCESS) {
 		printf("\n Error number %d", error);
 	}
@@ -51,8 +51,7 @@ void OpenCL_Raytracer::render(unsigned int* imageData) {
 
 	const char *srcptr[] = { src };
 	/* Submit the source code of the kernel to OpenCL, and create a program object with it */
-	cl_program prog = clCreateProgramWithSource(context, 1, srcptr, &srcsize,
-			&error);
+	prog = clCreateProgramWithSource(context, 1, srcptr, &srcsize, &error);
 	if (error != CL_SUCCESS) {
 		printf("\n Error number %d", error);
 	}
@@ -68,69 +67,40 @@ void OpenCL_Raytracer::render(unsigned int* imageData) {
 		printf("Build Log for %s_program:\n%s\n", "example", build_c);
 	}
 
-	/* Create memory buffers in the Context where the desired Device is. These will be the pointer
-	 parameters on the kernel. */
-	cl_mem scene, frame;
-	int sceneSize = objects.size() * sizeof(Sphere);
-	int frameSize = screenWidth * screenHeight * sizeof(unsigned int);
-	scene = clCreateBuffer(context, CL_MEM_READ_ONLY, sceneSize, NULL, &error);
-	if (error != CL_SUCCESS) {
-		printf("\n Error number %d", error);
-	}
+	frameSize = screenWidth * screenHeight * sizeof(unsigned int);
+	trace_kernel = clCreateKernel(prog, "trace_cl", &error);
 	frame = clCreateBuffer(context, CL_MEM_WRITE_ONLY, frameSize, NULL, &error);
-	if (error != CL_SUCCESS) {
-		printf("\n Error number %d", error);
-	}
-	/* Create a kernel object with the compiled program */
-	cl_kernel k_example = clCreateKernel(prog, "example", &error);
-	if (error != CL_SUCCESS) {
-		printf("\n Error number %d", error);
-	}
 
-	/* Set the kernel parameters */
-	error = clSetKernelArg(k_example, 0, sizeof(scene), &scene);
-	if (error != CL_SUCCESS) {
-		printf("\n Error number %d", error);
-	}
-	int scene_objects = objects.size();
-	error = clSetKernelArg(k_example, 1, sizeof(int), &scene_objects);
-		if (error != CL_SUCCESS) {
-			printf("\n Error number %d", error);
-		}
-	error = clSetKernelArg(k_example, 2, sizeof(frame), &frame);
-	if (error != CL_SUCCESS) {
-		printf("\n Error number %d", error);
-	}
+	/* Set the kernel parameters, scene size will be set later */
+	clSetKernelArg(trace_kernel, 2, sizeof(frame), &frame);
+}
 
-	/* Send input data to OpenCL (async, don't alter the buffer!) */
+void OpenCL_Raytracer::render(unsigned int* imageData) {
+	cl_int error;
+	int sceneSize = objects.size() * sizeof(Sphere);
+	scene = clCreateBuffer(context, CL_MEM_READ_ONLY, sceneSize, NULL, &error); //TODO generate in separate method
+	scene_objects = objects.size();
+	clSetKernelArg(trace_kernel, 0, sizeof(scene), &scene);
+	clSetKernelArg(trace_kernel, 1, sizeof(int), &scene_objects);
+
+	//pass scene data to OpenGL
 	for (unsigned int i = 0; i < objects.size(); i++) {
-		error = clEnqueueWriteBuffer(cq, scene, CL_FALSE, i * sizeof(Sphere),
+		clEnqueueWriteBuffer(command_queue, scene, CL_FALSE, i * sizeof(Sphere),
 				sizeof(Sphere), objects[i], 0, NULL,
 				NULL);
-		if (error != CL_SUCCESS) {
-			printf("\n Error number %d", error);
-		}
 	}
 	/* Tell the Device, through the command queue, to execute the Kernel */
-	size_t global_item_size[2] = { screenWidth, screenHeight};
-	error = clEnqueueNDRangeKernel(cq, k_example, 2, NULL, global_item_size, NULL,
-			0, NULL, NULL);
-	if (error != CL_SUCCESS) {
-		printf("\n Error number %d", error);
-	}
-	/* Read the result back into buf2 */
-	error = clEnqueueReadBuffer(cq, frame, CL_FALSE, 0, frameSize, imageData, 0,
-	 NULL,
-	 NULL);
-	 if (error != CL_SUCCESS) {
-	 printf("\n Error number %d", error);
-	 }
+	size_t global_item_size[2] = { screenWidth, screenHeight };
+	clEnqueueNDRangeKernel(command_queue, trace_kernel, 2, NULL, global_item_size,
+	NULL, 0, NULL, NULL);
+	/* Read the result back into framebuffer */
+	clEnqueueReadBuffer(command_queue, frame, CL_FALSE, 0, frameSize, imageData,
+			0,
+			NULL,
+			NULL);
 	/* Await completion of all the above */
-	error = clFinish(cq);
-	if (error != CL_SUCCESS) {
-		printf("\n Error number %d", error);
-	}
-	/* Finally, output the result */
-	//TODO
-	cout << "OpenCL Raytracer finished!" << endl; //TODO remove
+	clFinish(command_queue);
+
+	objects[1]->center.z -= 0.5;  //TODO remove, only for testing
+	//cout << "OpenCL Raytracer finished!" << endl;  //TODO remove
 }

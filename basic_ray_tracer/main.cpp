@@ -12,6 +12,8 @@ extern "C" SDL_Surface * Show_screen(int w, int h, char * name_window);
 extern "C" int print_string(int horiz_offset, int vert_offset, int color,
 		char *font, void* display, const char* string);
 
+#define USE_OPENCL 1
+
 //[comment]
 // In the main function, we will create the scene which is composed of 5 spheres
 // and 1 light (which is also a sphere). Then, once the scene description is complete
@@ -24,8 +26,11 @@ int main(int argc, char **argv) {
 	IBMP * frame;
 	frame = create_surface(width, height);
 
-	//OpenCL_Raytracer raytracer(width, height);
+#if (USE_OPENCL == 1)
+	OpenCL_Raytracer raytracer(width, height);
+#else
 	Raytracer raytracer(width, height);
+#endif
 	raytracer.loadScene("scene/simple.xml");
 	//raytracer.generateSimpleScene();
 
