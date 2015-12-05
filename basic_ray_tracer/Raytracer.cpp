@@ -166,7 +166,7 @@ void Raytracer::generateSimpleScene() {
 			generateSphere(generateVector(5.0, 0, -25), 3,
 					generateVector(0.65, 0.77, 0.97), 1, generateVector(0)));
 	objects.push_back(
-			generateSphere(generateVector(-5.5, 0, -15), 3,
+			generateSphere(generateVector(-5.5, 0, -25), 3,
 					generateVector(0.90, 0.90, 0.90), 1, generateVector(0)));
 	// light
 	objects.push_back(
