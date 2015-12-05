@@ -1,0 +1,19 @@
+
+
+C:/LAB4/touch_test_de0_nano/rtl/modules/pll_sys.vhd
+
+May 03 11AM:18:41>: Error in CNX file format.
+
+Error messages are listed in file
+C:/LAB4/touch_test_de0_nano/rtl/modules/pll_sys.cnxerr.
+
+Can't create the custom megafunction variation file(s)
+
+C:/LAB4/touch_test_de0_nano/rtl/modules/pll_sys.vhd
+
+May 03 11AM:18:47>: Error in CNX file format.
+
+Error messages are listed in file
+C:/LAB4/touch_test_de0_nano/rtl/modules/pll_sys.cnxerr.
+
+Can't create the custom megafunction variation file(s)

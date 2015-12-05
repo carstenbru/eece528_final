@@ -1,0 +1,151 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: ip-generate --project-directory=C:/LAB4/touch_test_de0_nano/rtl/ --output-directory=C:/LAB4/touch_test_de0_nano/rtl/system/ --report-file=bsf:C:/LAB4/touch_test_de0_nano/rtl/system.bsf --system-info=DEVICE_FAMILY="Cyclone IV E" --system-info=DEVICE=EP4CE22F17C6 --system-info=DEVICE_SPEEDGRADE=6 --component-file=C:/LAB4/touch_test_de0_nano/rtl/system.qsys
+Progress: Loading rtl/system.qsys
+Progress: Reading input file
+Progress: Adding clk_sys [clock_source 13.1]
+Progress: Parameterizing module clk_sys
+Progress: Adding cpu [altera_nios2_qsys 13.1]
+Progress: Parameterizing module cpu
+Progress: Adding sdram [altera_avalon_new_sdram_controller 13.1]
+Progress: Parameterizing module sdram
+Progress: Adding sysid [altera_avalon_sysid_qsys 13.1]
+Progress: Parameterizing module sysid
+Progress: Adding timer_0 [altera_avalon_timer 13.1]
+Progress: Parameterizing module timer_0
+Progress: Adding uart_0 [altera_avalon_uart 13.1]
+Progress: Parameterizing module uart_0
+Progress: Adding pio_led_green [altera_avalon_pio 13.1]
+Progress: Parameterizing module pio_led_green
+Progress: Adding pio_sw [altera_avalon_pio 13.1]
+Progress: Parameterizing module pio_sw
+Progress: Adding epcs [altera_avalon_epcs_flash_controller 13.1]
+Progress: Parameterizing module epcs
+Progress: Adding jtag_uart [altera_avalon_jtag_uart 13.1]
+Progress: Parameterizing module jtag_uart
+Progress: Adding touch_panel_spi [altera_avalon_spi 13.1]
+Progress: Parameterizing module touch_panel_spi
+Progress: Adding touch_panel_busy [altera_avalon_pio 13.1]
+Progress: Parameterizing module touch_panel_busy
+Progress: Adding touch_panel_penirq_n [altera_avalon_pio 13.1]
+Progress: Parameterizing module touch_panel_penirq_n
+Progress: Adding alt_vip_vfr_0 [alt_vip_vfr 13.1]
+Progress: Parameterizing module alt_vip_vfr_0
+Progress: Adding alt_vip_itc_0 [alt_vip_itc 13.1]
+Progress: Parameterizing module alt_vip_itc_0
+Progress: Adding frac_start [altera_avalon_pio 13.1]
+Progress: Parameterizing module frac_start
+Progress: Adding cx [altera_avalon_pio 13.1]
+Progress: Parameterizing module cx
+Progress: Adding cy [altera_avalon_pio 13.1]
+Progress: Parameterizing module cy
+Progress: Adding max_it [altera_avalon_pio 13.1]
+Progress: Parameterizing module max_it
+Progress: Adding iter_sig [altera_avalon_pio 13.1]
+Progress: Parameterizing module iter_sig
+Progress: Adding frac_ready [altera_avalon_pio 13.1]
+Progress: Parameterizing module frac_ready
+Progress: Adding frac_done [altera_avalon_pio 13.1]
+Progress: Parameterizing module frac_done
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: system.sysid: System ID is not assigned automatically. Edit the System ID parameter to provide a unique ID
+Info: system.sysid: Time stamp will be automatically updated when this component is generated.
+Info: system.epcs: Dedicated AS interface is not supported, signals are exported to top level design.
+Info: system.touch_panel_busy: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: system.touch_panel_penirq_n: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Warning: system.alt_vip_vfr_0: The module properties SIMULATION_MODEL_IN_VERILOG and SIMULATION_MODEL_IN_VHDL can not both be set when using the SIMULATION file property: src_hdl/alt_vipvfr131_vfr.v, src_hdl/alt_vipvfr131_vfr_controller.v, src_hdl/alt_vipvfr131_vfr_control_packet_encoder.v, src_hdl/alt_vipvfr131_prc.v, src_hdl/alt_vipvfr131_prc_core.v, src_hdl/alt_vipvfr131_prc_read_master.v, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_package.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_avalon_mm_bursting_master_fifo.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_avalon_mm_master.v, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_unpack_data.v, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_avalon_mm_slave.v, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_stream_output.v, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_pulling_width_adapter.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_general_fifo.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_fifo_usedw_calculator.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_gray_clock_crosser.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_std_logic_vector_delay.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_one_bit_delay.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_logic_fifo.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_ram_fifo.vhd
+Info: system.frac_start: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Warning: system.epcs: Interrupt sender epcs.irq is not connected to an interrupt receiver
+Warning: system.alt_vip_vfr_0: Interrupt sender alt_vip_vfr_0.interrupt_sender is not connected to an interrupt receiver
+Info: ip-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: ip-generate --project-directory=C:/LAB4/touch_test_de0_nano/rtl/ --output-directory=C:/LAB4/touch_test_de0_nano/rtl/system/synthesis/ --file-set=QUARTUS_SYNTH --report-file=html:C:/LAB4/touch_test_de0_nano/rtl/system.html --report-file=sopcinfo:C:/LAB4/touch_test_de0_nano/rtl/system.sopcinfo --report-file=cmp:C:/LAB4/touch_test_de0_nano/rtl/system.cmp --report-file=qip:C:/LAB4/touch_test_de0_nano/rtl/system/synthesis/system.qip --report-file=svd --report-file=regmap:C:/LAB4/touch_test_de0_nano/rtl/system/synthesis/system.regmap --report-file=debuginfo:C:/LAB4/touch_test_de0_nano/rtl/system/synthesis/system.debuginfo --system-info=DEVICE_FAMILY="Cyclone IV E" --system-info=DEVICE=EP4CE22F17C6 --system-info=DEVICE_SPEEDGRADE=6 --component-file=C:/LAB4/touch_test_de0_nano/rtl/system.qsys --language=VERILOG
+Progress: Loading rtl/system.qsys
+Progress: Reading input file
+Progress: Adding clk_sys [clock_source 13.1]
+Progress: Parameterizing module clk_sys
+Progress: Adding cpu [altera_nios2_qsys 13.1]
+Progress: Parameterizing module cpu
+Progress: Adding sdram [altera_avalon_new_sdram_controller 13.1]
+Progress: Parameterizing module sdram
+Progress: Adding sysid [altera_avalon_sysid_qsys 13.1]
+Progress: Parameterizing module sysid
+Progress: Adding timer_0 [altera_avalon_timer 13.1]
+Progress: Parameterizing module timer_0
+Progress: Adding uart_0 [altera_avalon_uart 13.1]
+Progress: Parameterizing module uart_0
+Progress: Adding pio_led_green [altera_avalon_pio 13.1]
+Progress: Parameterizing module pio_led_green
+Progress: Adding pio_sw [altera_avalon_pio 13.1]
+Progress: Parameterizing module pio_sw
+Progress: Adding epcs [altera_avalon_epcs_flash_controller 13.1]
+Progress: Parameterizing module epcs
+Progress: Adding jtag_uart [altera_avalon_jtag_uart 13.1]
+Progress: Parameterizing module jtag_uart
+Progress: Adding touch_panel_spi [altera_avalon_spi 13.1]
+Progress: Parameterizing module touch_panel_spi
+Progress: Adding touch_panel_busy [altera_avalon_pio 13.1]
+Progress: Parameterizing module touch_panel_busy
+Progress: Adding touch_panel_penirq_n [altera_avalon_pio 13.1]
+Progress: Parameterizing module touch_panel_penirq_n
+Progress: Adding alt_vip_vfr_0 [alt_vip_vfr 13.1]
+Progress: Parameterizing module alt_vip_vfr_0
+Progress: Adding alt_vip_itc_0 [alt_vip_itc 13.1]
+Progress: Parameterizing module alt_vip_itc_0
+Progress: Adding frac_start [altera_avalon_pio 13.1]
+Progress: Parameterizing module frac_start
+Progress: Adding cx [altera_avalon_pio 13.1]
+Progress: Parameterizing module cx
+Progress: Adding cy [altera_avalon_pio 13.1]
+Progress: Parameterizing module cy
+Progress: Adding max_it [altera_avalon_pio 13.1]
+Progress: Parameterizing module max_it
+Progress: Adding iter_sig [altera_avalon_pio 13.1]
+Progress: Parameterizing module iter_sig
+Progress: Adding frac_ready [altera_avalon_pio 13.1]
+Progress: Parameterizing module frac_ready
+Progress: Adding frac_done [altera_avalon_pio 13.1]
+Progress: Parameterizing module frac_done
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: system.sysid: System ID is not assigned automatically. Edit the System ID parameter to provide a unique ID
+Info: system.sysid: Time stamp will be automatically updated when this component is generated.
+Info: system.epcs: Dedicated AS interface is not supported, signals are exported to top level design.
+Info: system.touch_panel_busy: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: system.touch_panel_penirq_n: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Warning: system.alt_vip_vfr_0: The module properties SIMULATION_MODEL_IN_VERILOG and SIMULATION_MODEL_IN_VHDL can not both be set when using the SIMULATION file property: src_hdl/alt_vipvfr131_vfr.v, src_hdl/alt_vipvfr131_vfr_controller.v, src_hdl/alt_vipvfr131_vfr_control_packet_encoder.v, src_hdl/alt_vipvfr131_prc.v, src_hdl/alt_vipvfr131_prc_core.v, src_hdl/alt_vipvfr131_prc_read_master.v, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_package.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_avalon_mm_bursting_master_fifo.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_avalon_mm_master.v, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_unpack_data.v, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_avalon_mm_slave.v, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_stream_output.v, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_pulling_width_adapter.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_general_fifo.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_fifo_usedw_calculator.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_gray_clock_crosser.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_std_logic_vector_delay.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_one_bit_delay.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_logic_fifo.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_ram_fifo.vhd
+Info: system.frac_start: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Warning: system.epcs: Interrupt sender epcs.irq is not connected to an interrupt receiver
+Warning: system.alt_vip_vfr_0: Interrupt sender alt_vip_vfr_0.interrupt_sender is not connected to an interrupt receiver
+Info: system: Generating system "system" for QUARTUS_SYNTH
+Info: pipeline_bridge_swap_transform: After transform: 22 modules, 82 connections
+Info: No custom instruction connections, skipping transform 
+Info: merlin_initial_interconnect_transform: After transform: 21 modules, 74 connections
+Info: merlin_translator_transform: After transform: 44 modules, 153 connections
+Info: merlin_domain_transform: After transform: 89 modules, 422 connections
+Info: merlin_router_transform: After transform: 112 modules, 501 connections
+Info: merlin_traffic_limiter_transform: After transform: 113 modules, 506 connections
+Info: merlin_burst_transform: After transform: 114 modules, 510 connections
+Info: merlin_network_to_switch_transform: After transform: 159 modules, 614 connections
+Info: merlin_width_transform: After transform: 161 modules, 622 connections
+Info: merlin_pipeline_transform: After transform: 251 modules, 945 connections
+Info: merlin_clock_and_reset_bridge_transform: After transform: 254 modules, 1199 connections
+Info: merlin_hierarchy_transform: After transform: 23 modules, 85 connections
+Info: merlin_mm_transform: After transform: 23 modules, 85 connections
+Info: merlin_interrupt_mapper_transform: After transform: 24 modules, 89 connections
+Info: reset_adaptation_transform: After transform: 26 modules, 91 connections
+Warning: system: "No matching role found for uart_0:s1:dataavailable (dataavailable)"
+Warning: system: "No matching role found for uart_0:s1:readyfordata (readyfordata)"
+Warning: system: "No matching role found for epcs:epcs_control_port:endofpacket (endofpacket)"
+Warning: system: "No matching role found for epcs:epcs_control_port:dataavailable (dataavailable)"
+Warning: system: "No matching role found for epcs:epcs_control_port:readyfordata (readyfordata)"
+Error: Generation stopped, 24 or more modules remaining
+Info: system: Done "system" with 21 modules, 1 files, 77666 bytes
+Error: ip-generate failed with exit code 1: 1 Error, 8 Warnings
+Info: Stopping: Create HDL design files for synthesis

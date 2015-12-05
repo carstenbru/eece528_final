@@ -1,0 +1,262 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: ip-generate --project-directory=C:/LAB4/touch_test_de0_nano/rtl/ --output-directory=C:/LAB4/touch_test_de0_nano/rtl/system/ --report-file=bsf:C:/LAB4/touch_test_de0_nano/rtl/system.bsf --system-info=DEVICE_FAMILY="Cyclone IV E" --system-info=DEVICE=EP4CE22F17C6 --system-info=DEVICE_SPEEDGRADE=6 --component-file=C:/LAB4/touch_test_de0_nano/rtl/system.qsys
+Progress: Loading rtl/system.qsys
+Progress: Reading input file
+Progress: Adding clk_sys [clock_source 13.1]
+Progress: Parameterizing module clk_sys
+Progress: Adding cpu [altera_nios2_qsys 13.1]
+Progress: Parameterizing module cpu
+Progress: Adding sdram [altera_avalon_new_sdram_controller 13.1]
+Progress: Parameterizing module sdram
+Progress: Adding sysid [altera_avalon_sysid_qsys 13.1]
+Progress: Parameterizing module sysid
+Progress: Adding timer_0 [altera_avalon_timer 13.1]
+Progress: Parameterizing module timer_0
+Progress: Adding uart_0 [altera_avalon_uart 13.1]
+Progress: Parameterizing module uart_0
+Progress: Adding pio_led_green [altera_avalon_pio 13.1]
+Progress: Parameterizing module pio_led_green
+Progress: Adding pio_sw [altera_avalon_pio 13.1]
+Progress: Parameterizing module pio_sw
+Progress: Adding epcs [altera_avalon_epcs_flash_controller 13.1]
+Progress: Parameterizing module epcs
+Progress: Adding jtag_uart [altera_avalon_jtag_uart 13.1]
+Progress: Parameterizing module jtag_uart
+Progress: Adding touch_panel_spi [altera_avalon_spi 13.1]
+Progress: Parameterizing module touch_panel_spi
+Progress: Adding touch_panel_busy [altera_avalon_pio 13.1]
+Progress: Parameterizing module touch_panel_busy
+Progress: Adding touch_panel_penirq_n [altera_avalon_pio 13.1]
+Progress: Parameterizing module touch_panel_penirq_n
+Progress: Adding alt_vip_vfr_0 [alt_vip_vfr 13.1]
+Progress: Parameterizing module alt_vip_vfr_0
+Progress: Adding alt_vip_itc_0 [alt_vip_itc 13.1]
+Progress: Parameterizing module alt_vip_itc_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: system.sysid: System ID is not assigned automatically. Edit the System ID parameter to provide a unique ID
+Info: system.sysid: Time stamp will be automatically updated when this component is generated.
+Info: system.epcs: Dedicated AS interface is not supported, signals are exported to top level design.
+Info: system.touch_panel_busy: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: system.touch_panel_penirq_n: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Warning: system.alt_vip_vfr_0: The module properties SIMULATION_MODEL_IN_VERILOG and SIMULATION_MODEL_IN_VHDL can not both be set when using the SIMULATION file property: src_hdl/alt_vipvfr131_vfr.v, src_hdl/alt_vipvfr131_vfr_controller.v, src_hdl/alt_vipvfr131_vfr_control_packet_encoder.v, src_hdl/alt_vipvfr131_prc.v, src_hdl/alt_vipvfr131_prc_core.v, src_hdl/alt_vipvfr131_prc_read_master.v, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_package.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_avalon_mm_bursting_master_fifo.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_avalon_mm_master.v, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_unpack_data.v, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_avalon_mm_slave.v, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_stream_output.v, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_pulling_width_adapter.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_general_fifo.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_fifo_usedw_calculator.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_gray_clock_crosser.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_std_logic_vector_delay.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_one_bit_delay.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_logic_fifo.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_ram_fifo.vhd
+Warning: system.epcs: Interrupt sender epcs.irq is not connected to an interrupt receiver
+Warning: system.alt_vip_vfr_0: Interrupt sender alt_vip_vfr_0.interrupt_sender is not connected to an interrupt receiver
+Info: ip-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: ip-generate --project-directory=C:/LAB4/touch_test_de0_nano/rtl/ --output-directory=C:/LAB4/touch_test_de0_nano/rtl/system/synthesis/ --file-set=QUARTUS_SYNTH --report-file=html:C:/LAB4/touch_test_de0_nano/rtl/system.html --report-file=sopcinfo:C:/LAB4/touch_test_de0_nano/rtl/system.sopcinfo --report-file=cmp:C:/LAB4/touch_test_de0_nano/rtl/system.cmp --report-file=qip:C:/LAB4/touch_test_de0_nano/rtl/system/synthesis/system.qip --report-file=svd --report-file=regmap:C:/LAB4/touch_test_de0_nano/rtl/system/synthesis/system.regmap --report-file=debuginfo:C:/LAB4/touch_test_de0_nano/rtl/system/synthesis/system.debuginfo --system-info=DEVICE_FAMILY="Cyclone IV E" --system-info=DEVICE=EP4CE22F17C6 --system-info=DEVICE_SPEEDGRADE=6 --component-file=C:/LAB4/touch_test_de0_nano/rtl/system.qsys --language=VERILOG
+Progress: Loading rtl/system.qsys
+Progress: Reading input file
+Progress: Adding clk_sys [clock_source 13.1]
+Progress: Parameterizing module clk_sys
+Progress: Adding cpu [altera_nios2_qsys 13.1]
+Progress: Parameterizing module cpu
+Progress: Adding sdram [altera_avalon_new_sdram_controller 13.1]
+Progress: Parameterizing module sdram
+Progress: Adding sysid [altera_avalon_sysid_qsys 13.1]
+Progress: Parameterizing module sysid
+Progress: Adding timer_0 [altera_avalon_timer 13.1]
+Progress: Parameterizing module timer_0
+Progress: Adding uart_0 [altera_avalon_uart 13.1]
+Progress: Parameterizing module uart_0
+Progress: Adding pio_led_green [altera_avalon_pio 13.1]
+Progress: Parameterizing module pio_led_green
+Progress: Adding pio_sw [altera_avalon_pio 13.1]
+Progress: Parameterizing module pio_sw
+Progress: Adding epcs [altera_avalon_epcs_flash_controller 13.1]
+Progress: Parameterizing module epcs
+Progress: Adding jtag_uart [altera_avalon_jtag_uart 13.1]
+Progress: Parameterizing module jtag_uart
+Progress: Adding touch_panel_spi [altera_avalon_spi 13.1]
+Progress: Parameterizing module touch_panel_spi
+Progress: Adding touch_panel_busy [altera_avalon_pio 13.1]
+Progress: Parameterizing module touch_panel_busy
+Progress: Adding touch_panel_penirq_n [altera_avalon_pio 13.1]
+Progress: Parameterizing module touch_panel_penirq_n
+Progress: Adding alt_vip_vfr_0 [alt_vip_vfr 13.1]
+Progress: Parameterizing module alt_vip_vfr_0
+Progress: Adding alt_vip_itc_0 [alt_vip_itc 13.1]
+Progress: Parameterizing module alt_vip_itc_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: system.sysid: System ID is not assigned automatically. Edit the System ID parameter to provide a unique ID
+Info: system.sysid: Time stamp will be automatically updated when this component is generated.
+Info: system.epcs: Dedicated AS interface is not supported, signals are exported to top level design.
+Info: system.touch_panel_busy: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: system.touch_panel_penirq_n: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Warning: system.alt_vip_vfr_0: The module properties SIMULATION_MODEL_IN_VERILOG and SIMULATION_MODEL_IN_VHDL can not both be set when using the SIMULATION file property: src_hdl/alt_vipvfr131_vfr.v, src_hdl/alt_vipvfr131_vfr_controller.v, src_hdl/alt_vipvfr131_vfr_control_packet_encoder.v, src_hdl/alt_vipvfr131_prc.v, src_hdl/alt_vipvfr131_prc_core.v, src_hdl/alt_vipvfr131_prc_read_master.v, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_package.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_avalon_mm_bursting_master_fifo.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_avalon_mm_master.v, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_unpack_data.v, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_avalon_mm_slave.v, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_stream_output.v, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_pulling_width_adapter.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_general_fifo.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_fifo_usedw_calculator.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_gray_clock_crosser.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_std_logic_vector_delay.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_one_bit_delay.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_logic_fifo.vhd, C:/altera/13.1/ip/altera/frame_reader/common_hdl/alt_vipvfr131_common_ram_fifo.vhd
+Warning: system.epcs: Interrupt sender epcs.irq is not connected to an interrupt receiver
+Warning: system.alt_vip_vfr_0: Interrupt sender alt_vip_vfr_0.interrupt_sender is not connected to an interrupt receiver
+Info: system: Generating system "system" for QUARTUS_SYNTH
+Info: pipeline_bridge_swap_transform: After transform: 15 modules, 61 connections
+Info: No custom instruction connections, skipping transform 
+Info: merlin_initial_interconnect_transform: After transform: 14 modules, 53 connections
+Info: merlin_translator_transform: After transform: 30 modules, 111 connections
+Info: merlin_domain_transform: After transform: 61 modules, 303 connections
+Info: merlin_router_transform: After transform: 77 modules, 361 connections
+Info: merlin_burst_transform: After transform: 78 modules, 365 connections
+Info: merlin_network_to_switch_transform: After transform: 109 modules, 441 connections
+Info: merlin_width_transform: After transform: 111 modules, 449 connections
+Info: merlin_pipeline_transform: After transform: 171 modules, 673 connections
+Info: merlin_clock_and_reset_bridge_transform: After transform: 174 modules, 847 connections
+Info: merlin_hierarchy_transform: After transform: 16 modules, 64 connections
+Info: merlin_mm_transform: After transform: 16 modules, 64 connections
+Info: merlin_interrupt_mapper_transform: After transform: 17 modules, 68 connections
+Info: reset_adaptation_transform: After transform: 19 modules, 70 connections
+Warning: system: "No matching role found for epcs:epcs_control_port:endofpacket (endofpacket)"
+Warning: system: "No matching role found for epcs:epcs_control_port:dataavailable (dataavailable)"
+Warning: system: "No matching role found for epcs:epcs_control_port:readyfordata (readyfordata)"
+Warning: system: "No matching role found for uart_0:s1:dataavailable (dataavailable)"
+Warning: system: "No matching role found for uart_0:s1:readyfordata (readyfordata)"
+Info: cpu: Starting RTL generation for module 'system_cpu'
+Info: cpu:   Generation command is [exec C:/altera/13.1/quartus/bin/eperlcmd.exe -I C:/altera/13.1/quartus/bin/perl/lib -I C:/altera/13.1/quartus/sopc_builder/bin/europa -I C:/altera/13.1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.1/quartus/sopc_builder/bin -I C:/altera/13.1/quartus/../ip/altera/nios2_ip/altera_nios2/cpu_lib -I C:/altera/13.1/quartus/../ip/altera/nios2_ip/altera_nios2/nios_lib -I C:/altera/13.1/quartus/../ip/altera/nios2_ip/altera_nios2 -I C:/altera/13.1/quartus/../ip/altera/nios2_ip/altera_nios2 -- C:/altera/13.1/quartus/../ip/altera/nios2_ip/altera_nios2/generate_rtl.epl --name=system_cpu --dir=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0001_cpu_gen/ --quartus_dir=C:/altera/13.1/quartus --verilog --config=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0001_cpu_gen//system_cpu_processor_configuration.pl  --do_build_sim=0  ]
+Info: cpu: # 2014.05.03 11:02:21 (*) Starting Nios II generation
+Info: cpu: # 2014.05.03 11:02:21 (*)   Checking for plaintext license.
+Info: cpu: # 2014.05.03 11:02:21 (*)   Couldn't query license setup in Quartus directory C:/altera/13.1/quartus
+Info: cpu: # 2014.05.03 11:02:21 (*)   Defaulting to contents of LM_LICENSE_FILE environment variable
+Info: cpu: # 2014.05.03 11:02:21 (*)   LM_LICENSE_FILE environment variable is empty
+Info: cpu: # 2014.05.03 11:02:21 (*)   Plaintext license not found.
+Info: cpu: # 2014.05.03 11:02:21 (*)   No license required to generate encrypted Nios II/e.
+Info: cpu: # 2014.05.03 11:02:21 (*)   Elaborating CPU configuration settings
+Info: cpu: # 2014.05.03 11:02:21 (*)   Creating all objects for CPU
+Info: cpu: # 2014.05.03 11:02:23 (*)   Generating RTL from CPU objects
+Info: cpu: # 2014.05.03 11:02:23 (*)   Creating plain-text RTL
+Info: cpu: # 2014.05.03 11:02:26 (*) Done Nios II generation
+Info: cpu: Done RTL generation for module 'system_cpu'
+Info: cpu: "system" instantiated altera_nios2_qsys "cpu"
+Info: sdram: Starting RTL generation for module 'system_sdram'
+Info: sdram:   Generation command is [exec C:/altera/13.1/quartus/bin/perl/bin/perl.exe -I C:/altera/13.1/quartus/bin/perl/lib -I C:/altera/13.1/quartus/sopc_builder/bin/europa -I C:/altera/13.1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.1/quartus/sopc_builder/bin -I C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_new_sdram_controller -- C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_new_sdram_controller/generate_rtl.pl --name=system_sdram --dir=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0002_sdram_gen/ --quartus_dir=C:/altera/13.1/quartus --verilog --config=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0002_sdram_gen//system_sdram_component_configuration.pl  --do_build_sim=0  ]
+Info: sdram: Done RTL generation for module 'system_sdram'
+Info: sdram: "system" instantiated altera_avalon_new_sdram_controller "sdram"
+Info: sysid: "system" instantiated altera_avalon_sysid_qsys "sysid"
+Info: timer_0: Starting RTL generation for module 'system_timer_0'
+Info: timer_0:   Generation command is [exec C:/altera/13.1/quartus/bin//perl/bin/perl.exe -I C:/altera/13.1/quartus/bin//perl/lib -I C:/altera/13.1/quartus/sopc_builder/bin/europa -I C:/altera/13.1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.1/quartus/sopc_builder/bin -I C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_timer -- C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_timer/generate_rtl.pl --name=system_timer_0 --dir=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0004_timer_0_gen/ --quartus_dir=C:/altera/13.1/quartus --verilog --config=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0004_timer_0_gen//system_timer_0_component_configuration.pl  --do_build_sim=0  ]
+Info: timer_0: Done RTL generation for module 'system_timer_0'
+Info: timer_0: "system" instantiated altera_avalon_timer "timer_0"
+Info: uart_0: Starting RTL generation for module 'system_uart_0'
+Info: uart_0:   Generation command is [exec C:/altera/13.1/quartus/bin/perl/bin/perl.exe -I C:/altera/13.1/quartus/bin/perl/lib -I C:/altera/13.1/quartus/sopc_builder/bin/europa -I C:/altera/13.1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.1/quartus/sopc_builder/bin -I C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_uart -- C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_uart/generate_rtl.pl --name=system_uart_0 --dir=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0005_uart_0_gen/ --quartus_dir=C:/altera/13.1/quartus --verilog --config=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0005_uart_0_gen//system_uart_0_component_configuration.pl  --do_build_sim=0  ]
+Info: uart_0: Done RTL generation for module 'system_uart_0'
+Info: uart_0: "system" instantiated altera_avalon_uart "uart_0"
+Info: pio_led_green: Starting RTL generation for module 'system_pio_led_green'
+Info: pio_led_green:   Generation command is [exec C:/altera/13.1/quartus/bin/perl/bin/perl.exe -I C:/altera/13.1/quartus/bin/perl/lib -I C:/altera/13.1/quartus/sopc_builder/bin/europa -I C:/altera/13.1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.1/quartus/sopc_builder/bin -I C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=system_pio_led_green --dir=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0006_pio_led_green_gen/ --quartus_dir=C:/altera/13.1/quartus --verilog --config=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0006_pio_led_green_gen//system_pio_led_green_component_configuration.pl  --do_build_sim=0  ]
+Info: pio_led_green: Done RTL generation for module 'system_pio_led_green'
+Info: pio_led_green: "system" instantiated altera_avalon_pio "pio_led_green"
+Info: pio_sw: Starting RTL generation for module 'system_pio_sw'
+Info: pio_sw:   Generation command is [exec C:/altera/13.1/quartus/bin/perl/bin/perl.exe -I C:/altera/13.1/quartus/bin/perl/lib -I C:/altera/13.1/quartus/sopc_builder/bin/europa -I C:/altera/13.1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.1/quartus/sopc_builder/bin -I C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=system_pio_sw --dir=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0007_pio_sw_gen/ --quartus_dir=C:/altera/13.1/quartus --verilog --config=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0007_pio_sw_gen//system_pio_sw_component_configuration.pl  --do_build_sim=0  ]
+Info: pio_sw: Done RTL generation for module 'system_pio_sw'
+Info: pio_sw: "system" instantiated altera_avalon_pio "pio_sw"
+Info: epcs: Starting RTL generation for module 'system_epcs'
+Info: epcs:   Generation command is [exec C:/altera/13.1/quartus/bin/perl/bin/perl.exe -I C:/altera/13.1/quartus/bin/perl/lib -I C:/altera/13.1/quartus/sopc_builder/bin/europa -I C:/altera/13.1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.1/quartus/sopc_builder/bin -I C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_epcs_flash_controller -- C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_epcs_flash_controller/generate_rtl.pl --name=system_epcs --dir=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0008_epcs_gen/ --quartus_dir=C:/altera/13.1/quartus --verilog --config=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0008_epcs_gen//system_epcs_component_configuration.pl  --do_build_sim=0  ]
+Info: epcs: Done RTL generation for module 'system_epcs'
+Info: epcs: "system" instantiated altera_avalon_epcs_flash_controller "epcs"
+Info: jtag_uart: Starting RTL generation for module 'system_jtag_uart'
+Info: jtag_uart:   Generation command is [exec C:/altera/13.1/quartus/bin/perl/bin/perl.exe -I C:/altera/13.1/quartus/bin/perl/lib -I C:/altera/13.1/quartus/sopc_builder/bin/europa -I C:/altera/13.1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.1/quartus/sopc_builder/bin -I C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart -- C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart/generate_rtl.pl --name=system_jtag_uart --dir=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0009_jtag_uart_gen/ --quartus_dir=C:/altera/13.1/quartus --verilog --config=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0009_jtag_uart_gen//system_jtag_uart_component_configuration.pl  --do_build_sim=0  ]
+Info: jtag_uart: Done RTL generation for module 'system_jtag_uart'
+Info: jtag_uart: "system" instantiated altera_avalon_jtag_uart "jtag_uart"
+Info: touch_panel_spi: Starting RTL generation for module 'system_touch_panel_spi'
+Info: touch_panel_spi:   Generation command is [exec C:/altera/13.1/quartus/bin/perl/bin/perl.exe -I C:/altera/13.1/quartus/bin/perl/lib -I C:/altera/13.1/quartus/sopc_builder/bin/europa -I C:/altera/13.1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.1/quartus/sopc_builder/bin -I C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_spi -- C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_spi/generate_rtl.pl --name=system_touch_panel_spi --dir=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0010_touch_panel_spi_gen/ --quartus_dir=C:/altera/13.1/quartus --verilog --config=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0010_touch_panel_spi_gen//system_touch_panel_spi_component_configuration.pl  --do_build_sim=0  ]
+Info: touch_panel_spi: Done RTL generation for module 'system_touch_panel_spi'
+Info: touch_panel_spi: "system" instantiated altera_avalon_spi "touch_panel_spi"
+Info: touch_panel_busy: Starting RTL generation for module 'system_touch_panel_busy'
+Info: touch_panel_busy:   Generation command is [exec C:/altera/13.1/quartus/bin/perl/bin/perl.exe -I C:/altera/13.1/quartus/bin/perl/lib -I C:/altera/13.1/quartus/sopc_builder/bin/europa -I C:/altera/13.1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.1/quartus/sopc_builder/bin -I C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=system_touch_panel_busy --dir=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0011_touch_panel_busy_gen/ --quartus_dir=C:/altera/13.1/quartus --verilog --config=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0011_touch_panel_busy_gen//system_touch_panel_busy_component_configuration.pl  --do_build_sim=0  ]
+Info: touch_panel_busy: Done RTL generation for module 'system_touch_panel_busy'
+Info: touch_panel_busy: "system" instantiated altera_avalon_pio "touch_panel_busy"
+Info: touch_panel_penirq_n: Starting RTL generation for module 'system_touch_panel_penirq_n'
+Info: touch_panel_penirq_n:   Generation command is [exec C:/altera/13.1/quartus/bin/perl/bin/perl.exe -I C:/altera/13.1/quartus/bin/perl/lib -I C:/altera/13.1/quartus/sopc_builder/bin/europa -I C:/altera/13.1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.1/quartus/sopc_builder/bin -I C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/altera/13.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=system_touch_panel_penirq_n --dir=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0012_touch_panel_penirq_n_gen/ --quartus_dir=C:/altera/13.1/quartus --verilog --config=C:/Users/fabio/AppData/Local/Temp/alt6193_4093770953263535594.dir/0012_touch_panel_penirq_n_gen//system_touch_panel_penirq_n_component_configuration.pl  --do_build_sim=0  ]
+Info: touch_panel_penirq_n: Done RTL generation for module 'system_touch_panel_penirq_n'
+Info: touch_panel_penirq_n: "system" instantiated altera_avalon_pio "touch_panel_penirq_n"
+Info: alt_vip_vfr_0: "system" instantiated alt_vip_vfr "alt_vip_vfr_0"
+Info: alt_vip_itc_0: "system" instantiated alt_vip_itc "alt_vip_itc_0"
+Info: pipeline_bridge_swap_transform: After transform: 160 modules, 517 connections
+Info: No custom instruction connections, skipping transform 
+Info: merlin_initial_interconnect_transform: After transform: 0 modules, 0 connections
+Info: No Avalon connections, skipping transform 
+Info: merlin_hierarchy_transform: After transform: 160 modules, 517 connections
+Info: merlin_initial_interconnect_transform: After transform: 0 modules, 0 connections
+Info: No Avalon connections, skipping transform 
+Info: merlin_hierarchy_transform: After transform: 160 modules, 517 connections
+Info: merlin_initial_interconnect_transform: After transform: 0 modules, 0 connections
+Info: No Avalon connections, skipping transform 
+Info: merlin_hierarchy_transform: After transform: 160 modules, 517 connections
+Info: merlin_initial_interconnect_transform: After transform: 0 modules, 0 connections
+Info: No Avalon connections, skipping transform 
+Info: merlin_hierarchy_transform: After transform: 160 modules, 517 connections
+Info: merlin_initial_interconnect_transform: After transform: 0 modules, 0 connections
+Info: No Avalon connections, skipping transform 
+Info: merlin_hierarchy_transform: After transform: 160 modules, 517 connections
+Info: merlin_initial_interconnect_transform: After transform: 0 modules, 0 connections
+Info: No Avalon connections, skipping transform 
+Info: merlin_hierarchy_transform: After transform: 160 modules, 517 connections
+Info: merlin_initial_interconnect_transform: After transform: 0 modules, 0 connections
+Info: No Avalon connections, skipping transform 
+Info: merlin_hierarchy_transform: After transform: 160 modules, 517 connections
+Info: merlin_initial_interconnect_transform: After transform: 0 modules, 0 connections
+Info: No Avalon connections, skipping transform 
+Info: merlin_hierarchy_transform: After transform: 160 modules, 517 connections
+Info: merlin_initial_interconnect_transform: After transform: 0 modules, 0 connections
+Info: No Avalon connections, skipping transform 
+Info: merlin_hierarchy_transform: After transform: 160 modules, 517 connections
+Info: merlin_initial_interconnect_transform: After transform: 0 modules, 0 connections
+Info: No Avalon connections, skipping transform 
+Info: merlin_hierarchy_transform: After transform: 160 modules, 517 connections
+Info: merlin_initial_interconnect_transform: After transform: 0 modules, 0 connections
+Info: No Avalon connections, skipping transform 
+Info: merlin_hierarchy_transform: After transform: 160 modules, 517 connections
+Info: merlin_initial_interconnect_transform: After transform: 0 modules, 0 connections
+Info: No Avalon connections, skipping transform 
+Info: merlin_hierarchy_transform: After transform: 160 modules, 517 connections
+Info: merlin_initial_interconnect_transform: After transform: 0 modules, 0 connections
+Info: No Avalon connections, skipping transform 
+Info: merlin_hierarchy_transform: After transform: 160 modules, 517 connections
+Info: merlin_initial_interconnect_transform: After transform: 0 modules, 0 connections
+Info: No Avalon connections, skipping transform 
+Info: merlin_hierarchy_transform: After transform: 160 modules, 517 connections
+Info: merlin_initial_interconnect_transform: After transform: 0 modules, 0 connections
+Info: No Avalon connections, skipping transform 
+Info: merlin_hierarchy_transform: After transform: 160 modules, 517 connections
+Info: merlin_initial_interconnect_transform: After transform: 0 modules, 0 connections
+Info: No Avalon connections, skipping transform 
+Info: merlin_hierarchy_transform: After transform: 160 modules, 517 connections
+Info: mm_interconnect_0: "system" instantiated altera_merlin_interconnect_wrapper "mm_interconnect_0"
+Info: irq_mapper: "system" instantiated altera_irq_mapper "irq_mapper"
+Info: rst_controller: "system" instantiated altera_reset_controller "rst_controller"
+Info: cpu_instruction_master_translator: "mm_interconnect_0" instantiated altera_merlin_master_translator "cpu_instruction_master_translator"
+Info: cpu_jtag_debug_module_translator: "mm_interconnect_0" instantiated altera_merlin_slave_translator "cpu_jtag_debug_module_translator"
+Info: cpu_instruction_master_translator_avalon_universal_master_0_agent: "mm_interconnect_0" instantiated altera_merlin_master_agent "cpu_instruction_master_translator_avalon_universal_master_0_agent"
+Info: cpu_jtag_debug_module_translator_avalon_universal_slave_0_agent: "mm_interconnect_0" instantiated altera_merlin_slave_agent "cpu_jtag_debug_module_translator_avalon_universal_slave_0_agent"
+Info: cpu_jtag_debug_module_translator_avalon_universal_slave_0_agent_rsp_fifo: "mm_interconnect_0" instantiated altera_avalon_sc_fifo "cpu_jtag_debug_module_translator_avalon_universal_slave_0_agent_rsp_fifo"
+Info: addr_router: "mm_interconnect_0" instantiated altera_merlin_router "addr_router"
+Info: addr_router_001: "mm_interconnect_0" instantiated altera_merlin_router "addr_router_001"
+Info: addr_router_002: "mm_interconnect_0" instantiated altera_merlin_router "addr_router_002"
+Info: id_router: "mm_interconnect_0" instantiated altera_merlin_router "id_router"
+Info: id_router_001: "mm_interconnect_0" instantiated altera_merlin_router "id_router_001"
+Info: id_router_003: "mm_interconnect_0" instantiated altera_merlin_router "id_router_003"
+Info: burst_adapter: "mm_interconnect_0" instantiated altera_merlin_burst_adapter "burst_adapter"
+Info: cmd_xbar_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_xbar_demux"
+Info: cmd_xbar_demux_001: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_xbar_demux_001"
+Info: cmd_xbar_demux_002: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_xbar_demux_002"
+Info: cmd_xbar_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_xbar_mux"
+Info: cmd_xbar_mux_001: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_xbar_mux_001"
+Info: Reusing file C:/LAB4/touch_test_de0_nano/rtl/system/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: cmd_xbar_mux_003: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_xbar_mux_003"
+Info: Reusing file C:/LAB4/touch_test_de0_nano/rtl/system/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: rsp_xbar_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "rsp_xbar_demux"
+Info: rsp_xbar_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_xbar_mux"
+Info: Reusing file C:/LAB4/touch_test_de0_nano/rtl/system/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: rsp_xbar_mux_001: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_xbar_mux_001"
+Info: Reusing file C:/LAB4/touch_test_de0_nano/rtl/system/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: rsp_xbar_mux_002: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_xbar_mux_002"
+Info: Reusing file C:/LAB4/touch_test_de0_nano/rtl/system/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: width_adapter: "mm_interconnect_0" instantiated altera_merlin_width_adapter "width_adapter"
+Info: Reusing file C:/LAB4/touch_test_de0_nano/rtl/system/synthesis/submodules/altera_merlin_address_alignment.sv
+Info: Reusing file C:/LAB4/touch_test_de0_nano/rtl/system/synthesis/submodules/altera_merlin_burst_uncompressor.sv
+Info: agent_pipeline: "mm_interconnect_0" instantiated altera_avalon_st_pipeline_stage "agent_pipeline"
+Info: system: Done "system" with 42 modules, 92 files, 2064442 bytes
+Info: ip-generate succeeded.
+Info: Finished: Create HDL design files for synthesis

@@ -1,0 +1,10 @@
+PLL_Name	pll_system:pll_system_inst|altpll:altpll_component|pll_system_altpll:auto_generated|pll1
+PLLJITTER	40
+PLLSPEmax	84
+PLLSPEmin	-53
+
+PLL_Name	psx_control:psx_control_inst|pll:pll_inst|altpll:altpll_component|pll_altpll:auto_generated|pll1
+PLLJITTER	30
+PLLSPEmax	84
+PLLSPEmin	-53
+

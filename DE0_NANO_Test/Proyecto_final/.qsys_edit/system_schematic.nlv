@@ -1,0 +1,65 @@
+# # File gsaved with Nlview version 6.3.8  2013-12-19 bk=1.2992 VDI=34 GEI=35
+# 
+preplace inst system.epcs -pg 1 -lvl 4 -y 2650
+preplace inst system.boton_r -pg 1 -lvl 4 -y 930
+preplace inst system.boton_left -pg 1 -lvl 4 -y 830
+preplace inst system.touch_panel_busy -pg 1 -lvl 4 -y 2550
+preplace inst system.pio_led_green -pg 1 -lvl 4 -y 2250
+preplace inst system.boton_right -pg 1 -lvl 4 -y 1030
+preplace inst system.pio_sw -pg 1 -lvl 4 -y 2350
+preplace inst system.timer_0 -pg 1 -lvl 4 -y 1790
+preplace inst system.jtag_uart -pg 1 -lvl 4 -y 1610
+preplace inst system.boton_down -pg 1 -lvl 4 -y 630
+preplace inst system.analog2_x -pg 1 -lvl 4 -y 230
+preplace inst system.alt_vip_vfr_0 -pg 1 -lvl 2 -y 1390
+preplace inst system.touch_panel_spi -pg 1 -lvl 4 -y 2010
+preplace inst system.analog2_y -pg 1 -lvl 4 -y 330
+preplace inst system.analog1_x -pg 1 -lvl 4 -y 30
+preplace inst system.sdram -pg 1 -lvl 4 -y 2450
+preplace inst system.boton_x -pg 1 -lvl 4 -y 1230
+preplace inst system.analog1_y -pg 1 -lvl 4 -y 130
+preplace inst system.f_engine -pg 1 -lvl 4 -y 1530
+preplace inst system.cpu -pg 1 -lvl 3 -y 1510
+preplace inst system.clk_sys -pg 1 -lvl 1 -y 1550
+preplace inst system.boton_y -pg 1 -lvl 4 -y 1330
+preplace inst system.boton_up -pg 1 -lvl 4 -y 1130
+preplace inst system.boton_l -pg 1 -lvl 4 -y 730
+preplace inst system.uart_0 -pg 1 -lvl 4 -y 2130
+preplace inst system.touch_panel_penirq_n -pg 1 -lvl 4 -y 1890
+preplace inst system.sysid -pg 1 -lvl 4 -y 1710
+preplace inst system.boton_a -pg 1 -lvl 4 -y 430
+preplace inst system.boton_b -pg 1 -lvl 4 -y 530
+preplace inst system -pg 1 -lvl 1 -y 40 -regy -20
+preplace inst system.alt_vip_itc_0 -pg 1 -lvl 4 -y 1430
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)touch_panel_spi.external,(SLAVE)system.touch_panel_spi) 1 0 4 NJ 2040 NJ 2040 NJ 2040 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.boton_down,(SLAVE)boton_down.external_connection) 1 0 4 NJ 660 NJ 660 NJ 660 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.analog1_y,(SLAVE)analog1_y.external_connection) 1 0 4 NJ 160 NJ 160 NJ 160 NJ
+preplace netloc FAN_OUT<net_container>system</net_container>(SLAVE)uart_0.clk,(SLAVE)analog2_y.clk,(SLAVE)alt_vip_vfr_0.clock_reset,(SLAVE)touch_panel_spi.clk,(MASTER)clk_sys.clk,(SLAVE)epcs.clk,(SLAVE)cpu.clk,(SLAVE)analog1_y.clk,(SLAVE)f_engine.clock_reset,(SLAVE)boton_l.clk,(SLAVE)boton_left.clk,(SLAVE)boton_b.clk,(SLAVE)jtag_uart.clk,(SLAVE)pio_led_green.clk,(SLAVE)sdram.clk,(SLAVE)sysid.clk,(SLAVE)boton_y.clk,(SLAVE)boton_right.clk,(SLAVE)boton_x.clk,(SLAVE)boton_a.clk,(SLAVE)boton_r.clk,(SLAVE)timer_0.clk,(SLAVE)analog2_x.clk,(SLAVE)boton_up.clk,(SLAVE)pio_sw.clk,(SLAVE)alt_vip_itc_0.is_clk_rst,(SLAVE)touch_panel_busy.clk,(SLAVE)analog1_x.clk,(SLAVE)touch_panel_penirq_n.clk,(SLAVE)boton_down.clk,(SLAVE)alt_vip_vfr_0.clock_master) 1 1 3 390 1560 750 1340 1060
+preplace netloc POINT_TO_POINT<net_container>system</net_container>(SLAVE)alt_vip_itc_0.din,(MASTER)alt_vip_vfr_0.avalon_streaming_source) 1 2 2 N 1460 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.touch_panel_penirq_n,(SLAVE)touch_panel_penirq_n.external_connection) 1 0 4 NJ 1920 NJ 1920 NJ 1920 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.pio_sw,(SLAVE)pio_sw.external_connection) 1 0 4 NJ 2380 NJ 2380 NJ 2380 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)analog2_x.external_connection,(SLAVE)system.analog2_x) 1 0 4 NJ 260 NJ 260 NJ 260 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.analog2_y,(SLAVE)analog2_y.external_connection) 1 0 4 NJ 360 NJ 360 NJ 360 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)boton_r.external_connection,(SLAVE)system.boton_r) 1 0 4 NJ 960 NJ 960 NJ 960 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.boton_b,(SLAVE)boton_b.external_connection) 1 0 4 NJ 560 NJ 560 NJ 560 NJ
+preplace netloc FAN_OUT<net_container>system</net_container>(SLAVE)jtag_uart.irq,(MASTER)cpu.d_irq,(SLAVE)touch_panel_penirq_n.irq,(SLAVE)timer_0.irq,(SLAVE)uart_0.irq,(SLAVE)touch_panel_spi.irq) 1 3 1 1040
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)boton_y.external_connection,(SLAVE)system.boton_y) 1 0 4 NJ 1360 NJ 1360 NJ 1360 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.boton_up,(SLAVE)boton_up.external_connection) 1 0 4 NJ 1160 NJ 1160 NJ 1160 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)boton_left.external_connection,(SLAVE)system.boton_left) 1 0 4 NJ 860 NJ 860 NJ 860 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)boton_l.external_connection,(SLAVE)system.boton_l) 1 0 4 NJ 760 NJ 760 NJ 760 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)alt_vip_itc_0.clocked_video,(SLAVE)system.alt_vip_itc_0_clocked_video) 1 0 4 NJ 1540 NJ 1540 NJ 1440 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)pio_led_green.external_connection,(SLAVE)system.pio_led_green) 1 0 4 NJ 2280 NJ 2280 NJ 2280 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.uart_0,(SLAVE)uart_0.external_connection) 1 0 4 NJ 2160 NJ 2160 NJ 2160 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)sdram.wire,(SLAVE)system.sdram) 1 0 4 NJ 2520 NJ 2520 NJ 2520 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)clk_sys.clk_in,(SLAVE)system.clk) 1 0 1 NJ
+preplace netloc INTERCONNECT<net_container>system</net_container>(SLAVE)touch_panel_penirq_n.reset,(SLAVE)sysid.reset,(SLAVE)boton_down.reset,(SLAVE)alt_vip_vfr_0.clock_master_reset,(SLAVE)boton_x.reset,(SLAVE)boton_r.reset,(MASTER)clk_sys.clk_reset,(SLAVE)touch_panel_busy.reset,(SLAVE)f_engine.clock_reset_reset,(SLAVE)touch_panel_spi.reset,(SLAVE)alt_vip_itc_0.is_clk_rst_reset,(SLAVE)epcs.reset,(SLAVE)timer_0.reset,(SLAVE)pio_sw.reset,(SLAVE)boton_l.reset,(SLAVE)uart_0.reset,(SLAVE)boton_right.reset,(SLAVE)boton_up.reset,(SLAVE)boton_b.reset,(SLAVE)analog1_x.reset,(SLAVE)analog2_x.reset,(SLAVE)alt_vip_vfr_0.clock_reset_reset,(SLAVE)boton_left.reset,(SLAVE)boton_y.reset,(SLAVE)cpu.reset_n,(SLAVE)boton_a.reset,(SLAVE)pio_led_green.reset,(SLAVE)analog1_y.reset,(MASTER)cpu.jtag_debug_module_reset,(SLAVE)jtag_uart.reset,(SLAVE)sdram.reset,(SLAVE)analog2_y.reset) 1 1 3 410 1600 750 1640 1020
+preplace netloc INTERCONNECT<net_container>system</net_container>(SLAVE)sysid.control_slave,(SLAVE)boton_y.s1,(SLAVE)boton_x.s1,(MASTER)alt_vip_vfr_0.avalon_master,(SLAVE)boton_a.s1,(SLAVE)uart_0.s1,(SLAVE)f_engine.frac_cpu,(SLAVE)analog2_x.s1,(SLAVE)boton_l.s1,(MASTER)cpu.instruction_master,(SLAVE)alt_vip_vfr_0.avalon_slave,(SLAVE)analog1_y.s1,(SLAVE)touch_panel_spi.spi_control_port,(SLAVE)cpu.jtag_debug_module,(SLAVE)pio_led_green.s1,(SLAVE)analog2_y.s1,(SLAVE)timer_0.s1,(SLAVE)sdram.s1,(SLAVE)jtag_uart.avalon_jtag_slave,(MASTER)cpu.data_master,(SLAVE)boton_b.s1,(SLAVE)epcs.epcs_control_port,(SLAVE)boton_down.s1,(SLAVE)boton_right.s1,(SLAVE)boton_r.s1,(SLAVE)boton_up.s1,(SLAVE)touch_panel_busy.s1,(SLAVE)touch_panel_penirq_n.s1,(SLAVE)analog1_x.s1,(SLAVE)pio_sw.s1,(SLAVE)boton_left.s1) 1 1 3 430 1580 710 1420 1000
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)touch_panel_busy.external_connection,(SLAVE)system.touch_panel_busy) 1 0 4 NJ 2580 NJ 2580 NJ 2580 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.reset,(SLAVE)clk_sys.clk_in_reset) 1 0 1 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)analog1_x.external_connection,(SLAVE)system.analog1_x) 1 0 4 NJ 60 NJ 60 NJ 60 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.epcs,(SLAVE)epcs.external) 1 0 4 NJ 2700 NJ 2700 NJ 2700 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.boton_x,(SLAVE)boton_x.external_connection) 1 0 4 NJ 1260 NJ 1260 NJ 1260 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)boton_right.external_connection,(SLAVE)system.boton_right) 1 0 4 NJ 1060 NJ 1060 NJ 1060 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)boton_a.external_connection,(SLAVE)system.boton_a) 1 0 4 NJ 460 NJ 460 NJ 460 NJ
+levelinfo -pg 1 0 180 1260
+levelinfo -hier system 190 220 460 780 1090 1250
