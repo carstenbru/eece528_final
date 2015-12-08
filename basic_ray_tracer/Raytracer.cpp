@@ -71,10 +71,10 @@ Vec3f Raytracer::trace(const Vec3f &rayorig, const Vec3f &raydir,
 	}
 	// if there's no intersection return black or background color
 	if (!object)
-		return generateVector(3);
+		return generateVector(3*256);
 	Vec3f surfaceColor = { 0, 0, 0 };  // color of the ray/surfaceof the object intersected by the ray
 	Vec3f phit = mul(add(rayorig, raydir), tnear);  // point of intersection
-	Vec3f nhit = sub(phit, object->center);  // normal at the intersection point
+	Vec3f nhit = sub(phit, generateVector(object->center));  // normal at the intersection point
 	normalize(&nhit);  // normalize normal direction
 	// If the normal and the view direction are not opposite to each other
 	// reverse the normal direction. That also means we are inside the sphere so set
@@ -93,14 +93,14 @@ Vec3f Raytracer::trace(const Vec3f &rayorig, const Vec3f &raydir,
 		normalize(&refldir);
 		Vec3f reflection = trace(add(phit, mul(nhit, bias)), refldir, depth + 1);
 		// the result is a mix of reflection and refraction (if the sphere is transparent)
-		surfaceColor = mul(object->surfaceColor, mul(reflection, fresneleffect));
+		surfaceColor = mul(generateVector(object->surfaceColor), mul(reflection, fresneleffect/256.0f));
 	} else {
 		// it's a diffuse object, no need to raytrace any further
 		for (unsigned i = 0; i < objects.size(); ++i) {
-			if (objects[i]->emissionColor.x > 0) {
+			if (objects[i]->emissionColor.r > 0) {
 				// this is a light
-				Vec3f transmission = { 1, 1, 1 };
-				Vec3f lightDirection = sub(objects[i]->center, phit);
+				Vec3f transmission = { 1.0f/256, 1.0f/256, 1.0f/256 };
+				Vec3f lightDirection = sub(generateVector(objects[i]->center), phit);
 				normalize(&lightDirection);
 				for (unsigned j = 0; j < objects.size(); ++j) {
 					if (i != j) {
@@ -114,15 +114,15 @@ Vec3f Raytracer::trace(const Vec3f &rayorig, const Vec3f &raydir,
 				}
 				surfaceColor = add(surfaceColor,
 						mul(
-								mul(object->surfaceColor,
+								mul(generateVector(object->surfaceColor),
 										mul(transmission,
 												std::max(float(0), dot(nhit, lightDirection)))),
-								objects[i]->emissionColor));
+								generateVector(objects[i]->emissionColor)));
 			}
 		}
 	}
 
-	return add(surfaceColor, object->emissionColor);
+	return add(surfaceColor, generateVector(object->emissionColor));
 }
 
 //[comment]
@@ -143,9 +143,9 @@ void Raytracer::render(unsigned int* imageData) {
 			Vec3f raydir = { xx, yy, -1 };
 			normalize(&raydir);
 			pixel = trace(generateVector(0), raydir, 0);
-			*imageData++ = (int) (std::min(float(1), pixel.x) * 255) << 16
-					| (int) (std::min(float(1), pixel.y) * 255) << 8
-					| (int) (std::min(float(1), pixel.z) * 255);
+			*imageData++ = (int) (std::min(float(255), pixel.x)) << 16
+					| (int) (std::min(float(255), pixel.y)) << 8
+					| (int) (std::min(float(255), pixel.z));
 		}
 	}
 
@@ -154,24 +154,24 @@ void Raytracer::render(unsigned int* imageData) {
 
 void Raytracer::generateSimpleScene() {
 	objects.push_back(
-			generateSphere(generateVector(0.0, -10004, -20), 10000,
-					generateVector(0.20, 0.20, 0.20), 0, generateVector(0)));
+			generateSphere(generateVectorI(0, -10004, -20), 10000,
+					generateColor(51,51,51), 0, generateColor(0,0,0)));
 	objects.push_back(
-			generateSphere(generateVector(0.0, 0, -20), 4,
-					generateVector(1.00, 0.32, 0.36), 1, generateVector(0)));
+			generateSphere(generateVectorI(0, 0, -20), 4,
+					generateColor(1.00, 0.32, 0.36), 1, generateColor(0,0,0)));
 	objects.push_back(
-			generateSphere(generateVector(5.0, -1, -15), 2,
-					generateVector(0.90, 0.76, 0.46), 1, generateVector(0)));
+			generateSphere(generateVectorI(5, -1, -15), 2,
+					generateColor(0.90, 0.76, 0.46), 1, generateColor(0,0,0)));
 	objects.push_back(
-			generateSphere(generateVector(5.0, 0, -25), 3,
-					generateVector(0.65, 0.77, 0.97), 1, generateVector(0)));
+			generateSphere(generateVectorI(5, 0, -25), 3,
+					generateColor(0.65, 0.77, 0.97), 1, generateColor(0,0,0)));
 	objects.push_back(
-			generateSphere(generateVector(-5.5, 0, -25), 3,
-					generateVector(0.90, 0.90, 0.90), 1, generateVector(0)));
+			generateSphere(generateVectorI(-5.5, 0, -25), 3,
+					generateColor(0.90, 0.90, 0.90), 1, generateColor(0,0,0)));
 	// light
 	objects.push_back(
-			generateSphere(generateVector(0.0, 20, -30), 3,
-					generateVector(0.00, 0.00, 0.00), 0, generateVector(3)));
+			generateSphere(generateVectorI(0.0, 20, -30), 3,
+					generateColor(0.00, 0.00, 0.00), 0, generateColor(3,3,3)));
 }
 
 Vec3f Raytracer::parseVector(string line) {
@@ -220,8 +220,8 @@ void Raytracer::parseSphere(ifstream& in) {
 	while (getline(in, line)) {
 		if (line.find("</Sphere>") != string::npos) {
 			objects.push_back(
-					generateSphere(center, radius, surfaceColor, reflection,
-							emissionColor));
+					generateSphere(generateVector(center), radius, generateColor(surfaceColor), reflection,
+							generateColor(emissionColor)));
 			return;
 		}
 		if (line.find("<center") != string::npos) {

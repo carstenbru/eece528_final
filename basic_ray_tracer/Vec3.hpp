@@ -9,8 +9,34 @@ typedef struct {
 	float z;
 } Vec3f;
 
+typedef struct {
+	unsigned int r;
+	unsigned int g;
+	unsigned int b;
+} Color;
+
+typedef struct {
+	int x;
+	int y;
+	int z;
+} Vec3i;
+
+Color generateColorI(unsigned int r, unsigned int g, unsigned int b);
+Color generateColorI(Vec3f v);
+Color generateColor(float r, float g, float b);
+Color generateColor(Vec3f v);
+Vec3f generateVector(Vec3i v);
+Vec3f generateVector(Color v);
 Vec3f generateVector(float x, float y, float z);
 Vec3f generateVector(float val);
+Vec3i generateVectorI(int x, int y, int z);
+Vec3i generateVector(Vec3f v);
+
+Color add(const Color v1, const Color v2);
+Color mul(const Color v1, float mul);
+Color mul(const Color v1, const Color v2);
+
+
 
 float dot(const Vec3f v1, const Vec3f v2);
 Vec3f* normalize(Vec3f* v);

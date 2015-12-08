@@ -1,6 +1,26 @@
 #include "Vec3.hpp"
 #include <math.h>
 
+Color generateColorI(unsigned int r, unsigned int g, unsigned int b) {
+	Color c = { r, g, b };
+	return c;
+}
+
+Color generateColor(float r, float g, float b) {
+	Color c = { r * 255, g * 255, b * 255 };
+	return c;
+}
+
+Color generateColor(Vec3f v) {
+	return generateColor(v.x, v.y, v.z);
+}
+
+Color generateColorI(Vec3f v) {
+	Color c = { v.x, v.y, v.z };
+	return c;
+	//return generateColor(v.x, v.y, v.z);
+}
+
 Vec3f generateVector(float x, float y, float z) {
 	Vec3f v = { x, y, z };
 	return v;
@@ -8,6 +28,41 @@ Vec3f generateVector(float x, float y, float z) {
 
 Vec3f generateVector(float val) {
 	Vec3f v = { val, val, val };
+	return v;
+}
+
+Vec3f generateVector(Vec3i v) {
+	Vec3f v2 = { v.x, v.y, v.z };
+	return v2;
+}
+
+Vec3f generateVector(Color v) {
+	Vec3f v2 = { v.r, v.g, v.b };
+	return v2;
+}
+
+Vec3i generateVectorI(int x, int y, int z) {
+	Vec3i v = { x, y, z };
+	return v;
+}
+
+Vec3i generateVector(Vec3f v) {
+	Vec3i vr = { v.x, v.y, v.z };
+	return vr;
+}
+
+Color add(const Color v1, const Color v2) {
+	Color v = { v1.r + v2.r, v1.g + v2.g, v1.b + v2.b };
+	return v;
+}
+
+Color mul(const Color v1, float mul) {
+	Color v = { v1.r * mul, v1.g * mul, v1.b * mul };
+	return v;
+}
+
+Color mul(const Color v1, const Color v2) {
+	Color v = { v1.r * v2.r >> 8, v1.g * v2.g >> 8, v1.b * v2.b >> 8 };
 	return v;
 }
 
