@@ -20,7 +20,7 @@ public:
 	virtual void render(unsigned int* imageData);
 
 protected:
-	Color trace(const Vec3f &rayorig, const Vec3f &raydir, const int &depth);
+	Color trace(const Vec3i &rayorig, const Vec3i &raydir, const int &depth);
 };
 
 #endif
