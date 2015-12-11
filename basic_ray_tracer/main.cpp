@@ -1,6 +1,7 @@
 #include "Raytracer.hpp"
 #include "Raytracer_int.hpp"
 #include "Raytracer_pthreads.hpp"
+#include "Raytracer_OpenMP.hpp"
 #include "OpenCL_Raytracer.hpp"
 #include "Sphere.hpp"
 #include "timer.h"
@@ -15,8 +16,9 @@ extern "C" SDL_Surface * Show_screen(int w, int h, char * name_window);
 extern "C" int print_string(int horiz_offset, int vert_offset, int color,
 		char *font, void* display, const char* string);
 
-#define USE_OPENCL 1
+#define USE_OPENCL 0
 #define USE_PTHREADS 0
+#define USE_OPENMP 0
 
 //[comment]
 // In the main function, we will create the scene which is composed of 5 spheres
@@ -33,11 +35,14 @@ int main(int argc, char **argv) {
 #if (USE_OPENCL == 1)
 	OpenCL_Raytracer raytracer(width, height);
 #else
-	//Raytracer raytracer(width, height);
 #if (USE_PTHREADS == 1)
 	Raytracer_pthreads raytracer(width, height);
 #else
+#if (USE_OPENMP == 1)
+	Raytracer_OpenMP raytracer(width, height);
+#else
 	Raytracer_int raytracer(width, height);
+#endif
 #endif
 #endif
 	raytracer.loadScene("scene/simple.xml");
