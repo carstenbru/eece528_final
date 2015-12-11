@@ -45,7 +45,7 @@ Color Raytracer_int::trace(const Vec3i &rayorig, const Vec3i &raydir,
 	// find intersection of this ray with the sphere in the scene
 	for (unsigned i = 0; i < objects.size(); ++i) {
 		unsigned int t0 = UNSIGNED_MAX, t1 = UNSIGNED_MAX;
-		if (intersect_uint(objects[i], rayorig, raydir, &t0, &t1)) {
+		if (intersect(objects[i], rayorig, raydir, &t0, &t1)) {
 			if (t0 < 0)
 				t0 = t1;
 			if (t0 < tnear) {
@@ -95,7 +95,7 @@ Color Raytracer_int::trace(const Vec3i &rayorig, const Vec3i &raydir,
 				for (unsigned j = 0; j < objects.size(); ++j) {
 					if (i != j) {
 						unsigned int t0, t1;
-						if (intersect_uint(objects[j], add(phit, mul(nhit, bias)),
+						if (intersect(objects[j], add(phit, mul(nhit, bias)),
 								lightDirection, &t0, &t1)) {
 							shadow = 1;
 							break;
@@ -127,7 +127,7 @@ Color Raytracer_int::trace_it(Vec3i &rayorig, Vec3i &raydir) {
 		// find intersection of this ray with the sphere in the scene
 		for (unsigned i = 0; i < objects.size(); ++i) {
 			unsigned int t0 = UNSIGNED_MAX, t1 = UNSIGNED_MAX;
-			if (intersect_uint(objects[i], rayorig, raydir, &t0, &t1)) {
+			if (intersect(objects[i], rayorig, raydir, &t0, &t1)) {
 				if (t0 < 0)
 					t0 = t1;
 				if (t0 < tnear) {
@@ -181,7 +181,7 @@ Color Raytracer_int::trace_it(Vec3i &rayorig, Vec3i &raydir) {
 					for (unsigned j = 0; j < objects.size(); ++j) {
 						if (i != j) {
 							unsigned int t0, t1;
-							if (intersect_uint(objects[j], add(phit, mul(nhit, bias)),
+							if (intersect(objects[j], add(phit, mul(nhit, bias)),
 									lightDirection, &t0, &t1)) {
 								shadow = 1;
 								break;
@@ -207,7 +207,7 @@ Color Raytracer_int::trace_it(Vec3i &rayorig, Vec3i &raydir) {
 	}
 	return resColor;
 }
-#include <omp.h>
+
 void Raytracer_int::render(unsigned int* imageData) {
 	Color pixel;
 	int invWidth_2x = (FP_ONE << 1) / screenWidth;

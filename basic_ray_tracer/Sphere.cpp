@@ -15,7 +15,7 @@ Sphere* generateSphere(const Vec3i &c, const unsigned int &r, const Color &sc,
 	return s;
 }
 
-bool intersect_uint(Sphere* sphere, const Vec3i rayorig, const Vec3i raydir,
+bool intersect(Sphere* sphere, const Vec3i rayorig, const Vec3i raydir,
 		unsigned int* t0, unsigned int* t1) {
 	Vec3i l = sub(conv_fp(sphere->center, SCENE_COORDINATE_PRECISION), rayorig);
 	int tca = dot(l,raydir) >> FP_PRECISION;
