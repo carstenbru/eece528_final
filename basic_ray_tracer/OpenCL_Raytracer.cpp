@@ -9,7 +9,7 @@ using namespace std;
 
 OpenCL_Raytracer::OpenCL_Raytracer(unsigned int screenWidth,
 		unsigned int screenHeight) :
-		Raytracer(screenWidth, screenHeight) {
+		Raytracer(screenWidth, screenHeight), scene_objects(0) {
 	char build_c[65535 * 8];
 	size_t srcsize;
 

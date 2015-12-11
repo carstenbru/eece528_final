@@ -21,6 +21,7 @@ public:
 
 protected:
 	Color trace(const Vec3i &rayorig, const Vec3i &raydir, const int &depth);
+	Color trace_it(Vec3i &rayorig, Vec3i &raydir);
 };
 
 #endif
