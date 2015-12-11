@@ -15,22 +15,6 @@ Sphere* generateSphere(const Vec3i &c, const unsigned int &r, const Color &sc,
 	return s;
 }
 
-bool intersect(Sphere* sphere, const Vec3f rayorig, const Vec3f raydir,
-		float* t0, float* t1) {
-	Vec3f l = sub(generateVector(sphere->center), rayorig);
-	float tca = dot(l,raydir);
-	if (tca < 0)
-		return false;
-	float d2 = dot(l,l) - tca * tca;
-	if (d2 > sphere->radius2)
-		return false;
-	float thc = sqrt(sphere->radius2 - d2);
-	*t0 = tca - thc;
-	*t1 = tca + thc;
-
-	return true;
-}
-
 bool intersect_uint(Sphere* sphere, const Vec3i rayorig, const Vec3i raydir,
 		unsigned int* t0, unsigned int* t1) {
 	Vec3i l = sub(conv_fp(sphere->center, SCENE_COORDINATE_PRECISION), rayorig);

@@ -207,7 +207,7 @@ Color Raytracer_int::trace_it(Vec3i &rayorig, Vec3i &raydir) {
 	}
 	return resColor;
 }
-
+#include <omp.h>
 void Raytracer_int::render(unsigned int* imageData) {
 	Color pixel;
 	int invWidth_2x = (FP_ONE << 1) / screenWidth;
@@ -228,8 +228,8 @@ void Raytracer_int::render(unsigned int* imageData) {
 			//pixel = trace(generateVectorI(0, 0, 0), raydir, 0);
 			Vec3i rayorig = generateVectorI(0, 0, 0);
 			pixel = trace_it(rayorig, raydir);
-			*imageData++ = (std::min((unsigned int) 255, pixel.r)) << 16
-					| (std::min((unsigned int) 255, pixel.g)) << 8
+			*(imageData + x + y * screenWidth) = (std::min((unsigned int) 255,
+					pixel.r)) << 16 | (std::min((unsigned int) 255, pixel.g)) << 8
 					| (std::min((unsigned int) 255, pixel.b));
 		}
 	}

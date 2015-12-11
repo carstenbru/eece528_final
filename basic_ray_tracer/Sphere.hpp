@@ -19,8 +19,6 @@ typedef struct {
 
 Sphere* generateSphere(const Vec3i &c, const unsigned int &r, const Color &sc,
 		const unsigned int &refl, const Color &ec);
-bool intersect(Sphere* sphere, const Vec3f rayorig, const Vec3f raydir,
-		float* t0, float* t1);
 bool intersect_uint(Sphere* sphere, const Vec3i rayorig, const Vec3i raydir,
 		unsigned int* t0, unsigned int* t1);
 

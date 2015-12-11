@@ -13,7 +13,7 @@ extern "C" SDL_Surface * Show_screen(int w, int h, char * name_window);
 extern "C" int print_string(int horiz_offset, int vert_offset, int color,
 		char *font, void* display, const char* string);
 
-#define USE_OPENCL 1
+#define USE_OPENCL 0
 
 //[comment]
 // In the main function, we will create the scene which is composed of 5 spheres
