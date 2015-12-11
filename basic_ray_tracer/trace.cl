@@ -1,54 +1,103 @@
-typedef struct {
-	float x;
-	float y;
-	float z;
-} Vec3f;
 
 typedef struct {
-	Vec3f center;                           /// position of the object
+    unsigned int r;
+    unsigned int g;
+    unsigned int b;
+} Color;
 
-	float radius, radius2;
+typedef struct {
+    int x;
+    int y;
+    int z;
+} Vec3i;
 
-	Vec3f surfaceColor, emissionColor;      /// surface color and emission (light)
-	float reflection;      /// surface reflectivity
+typedef struct {
+    Vec3i center;                           /// position of the object
+    
+    unsigned int radius;
+    int radius2;
+    
+    Color surfaceColor, emissionColor;      /// surface color and emission (light)
+    unsigned int reflection;      /// surface reflectivity
+    
 } Sphere;
 
 #define MAX_RAY_DEPTH 10
+#define FP_PRECISION (16)
+#define SCENE_COORDINATE_PRECISION 0
+#define FP_ONE (1<<FP_PRECISION)
+#define UNSIGNED_MAX 0xFFFFFFFF
 
-Vec3f generateVector(float x, float y, float z);
-Vec3f generateVector3(float val);
 
-float dot_cl(const Vec3f v1, const Vec3f v2);
-Vec3f* normalize_cl(Vec3f* v);
-float length2(const Vec3f v);
-Vec3f sub(const Vec3f v1, const Vec3f v2);
-Vec3f add(const Vec3f v1, const Vec3f v2);
-Vec3f mulf(const Vec3f v1, float mul);
-Vec3f mul(const Vec3f v1, const Vec3f v2);
+Color generateColorI(unsigned int r, unsigned int g, unsigned int b);
+Vec3i generateVectorI(int x, int y, int z);
 
-bool intersect(Sphere* sphere, const Vec3f rayorig, const Vec3f raydir,
-		float* t0, float* t1);
+Color addc(const Color v1, const Color v2);
+Color mulci(const Color v1, int mul);
+Color mulc(const Color v1, const Color v2);
 
-float mix_cl(float a, float b, float mix) {
-	return b * mix + a * (1 - mix);
+Vec3i add(const Vec3i v1, const Vec3i v2);
+Vec3i sub(const Vec3i v1, const Vec3i v2);
+Vec3i muli(const Vec3i v1, int mul);
+Vec3i conv_fp(const Vec3i v1, int cur_precision);
+long int dot_cl(const Vec3i v1, const Vec3i v2);
+Vec3i* normalize_cl(Vec3i* v);
+long int length2(const Vec3i v);
+
+bool intersect(Sphere* sphere, const Vec3i rayorig, const Vec3i raydir,
+		unsigned int* t0, unsigned int* t1);
+
+Color generateColorI(unsigned int r, unsigned int g, unsigned int b) {
+    Color c = { r, g, b };
+    return c;
 }
 
-Vec3f generateVector(float x, float y, float z) {
-	Vec3f v = { x, y, z };
+Vec3i generateVectorI(int x, int y, int z) {
+	Vec3i v = { x, y, z };
 	return v;
 }
 
-Vec3f generateVector3(float val) {
-	Vec3f v = { val, val, val };
+Color addc(const Color v1, const Color v2) {
+    Color v = { v1.r + v2.r, v1.g + v2.g, v1.b + v2.b };
+    return v;
+}
+
+Color mulci(const Color v1, int mul) {
+    Color v = { (v1.r * mul) >> FP_PRECISION, (v1.g * mul) >> FP_PRECISION, (v1.b* mul) >> FP_PRECISION };
+    return v;
+}
+
+Color mulc(const Color v1, const Color v2) {
+    Color v = { (v1.r * v2.r) >> 8, (v1.g * v2.g) >> 8, (v1.b * v2.b) >> 8 };
+    return v;
+}
+
+Vec3i sub(const Vec3i v1, const Vec3i v2) {
+    Vec3i v = { v1.x - v2.x, v1.y - v2.y, v1.z - v2.z };
+    return v;
+}
+
+Vec3i add(const Vec3i v1, const Vec3i v2) {
+    Vec3i v = { v1.x + v2.x, v1.y + v2.y, v1.z + v2.z };
+    return v;
+}
+
+Vec3i conv_fp(const Vec3i v1, int cur_precision) {
+	Vec3i v =
+			{ v1.x << (FP_PRECISION - cur_precision), v1.y
+					<< (FP_PRECISION - cur_precision), v1.z
+					<< (FP_PRECISION - cur_precision) };
 	return v;
 }
 
-float dot_cl(const Vec3f v1, const Vec3f v2) {
-	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+Vec3i mul(const Vec3i v1, int mul) {
+	Vec3i v = { (v1.x * (long) mul) >> FP_PRECISION, (v1.y
+			* (long) mul) >> FP_PRECISION, (v1.z * (long) mul) >> FP_PRECISION };
+	return v;
 }
 
-Vec3f* normalize_cl(Vec3f* v) {
-	float nor2 = length2(*v);
+Vec3i* normalize_cl(Vec3i* v) {  //TODO do calulation in fp arithmetic
+	float nor2 = length2(*v) / (float) FP_ONE;
 	if (nor2 > 0) {
 		float invNor = 1 / sqrt(nor2);
 		v->x *= invNor, v->y *= invNor, v->z *= invNor;
@@ -56,155 +105,143 @@ Vec3f* normalize_cl(Vec3f* v) {
 	return v;
 }
 
-float length2(const Vec3f v) {
-	return v.x * v.x + v.y * v.y + v.z * v.z;
+long int length2(const Vec3i v) {
+	return (v.x * (long) v.x + v.y * (long) v.y + v.z * (long) v.z)
+			>> (FP_PRECISION);
 }
 
-Vec3f sub(const Vec3f v1, const Vec3f v2) {
-	Vec3f v = { v1.x - v2.x, v1.y - v2.y, v1.z - v2.z };
-	return v;
+long int dot_cl(const Vec3i v1, const Vec3i v2) {
+	return ((long)v1.x * (long)v2.x +(long) v1.y * (long)v2.y + (long)v1.z * (long)v2.z);
 }
 
-Vec3f add(const Vec3f v1, const Vec3f v2) {
-	Vec3f v = { v1.x + v2.x, v1.y + v2.y, v1.z + v2.z };
-	return v;
-}
-
-Vec3f mulf(const Vec3f v1, float mul) {
-	Vec3f v = { v1.x * mul, v1.y * mul, v1.z * mul };
-	return v;
-}
-
-Vec3f mul(const Vec3f v1, const Vec3f v2) {
-	Vec3f v = { v1.x * v2.x, v1.y * v2.y, v1.z * v2.z };
-	return v;
-}
-
-bool intersect(Sphere* sphere, const Vec3f rayorig, const Vec3f raydir,
-		float* t0, float* t1) {
-	Vec3f l = sub(sphere->center, rayorig);
-	float tca = dot_cl(l,raydir);
+bool intersect(Sphere* sphere, const Vec3i rayorig, const Vec3i raydir, unsigned int* t0, unsigned int* t1) {
+	Vec3i l = sub(conv_fp(sphere->center, SCENE_COORDINATE_PRECISION), rayorig);
+	int tca = dot_cl(l,raydir) >> FP_PRECISION;
 	if (tca < 0)
 		return false;
-	float d2 = dot_cl(l,l) - tca * tca;
-	if (d2 > sphere->radius2)
+	long int d2 = (dot_cl(l,l) >> FP_PRECISION) - (((long)tca * tca) >> FP_PRECISION);
+	if (d2 > (((long)sphere->radius2) << FP_PRECISION))
 		return false;
-	float thc = sqrt(sphere->radius2 - d2);
+	int thc = sqrt((float)sphere->radius2 - d2/65536.0f) * FP_ONE; //TODO srqt in int/fp!
 	*t0 = tca - thc;
 	*t1 = tca + thc;
 
 	return true;
 }
 
-Vec3f trace(Sphere* scene, int scene_size, Vec3f rayorig, Vec3f raydir) {
-    Vec3f resColor = generateVector3(0);
-    Vec3f mulColor = generateVector3(1);
-    int stop = 0;
-    for (int rec_depth = 0; rec_depth <= MAX_RAY_DEPTH; rec_depth++) {
-	float tnear = INFINITY;
-	const Sphere* object = 0;
-	// find intersection of this ray with the sphere in the scene
-	for (unsigned i = 0; i < scene_size; ++i) {
-		float t0 = INFINITY, t1 = INFINITY;
-		if (intersect((scene+i), rayorig, raydir, &t0, &t1)) {
-			if (t0 < 0)
-				t0 = t1;
-			if (t0 < tnear) {
-				tnear = t0;
-				object = (scene+i);
+Color trace(Sphere* scene, int scene_size, Vec3i rayorig, Vec3i raydir) {
+	Color resColor = generateColorI(0, 0, 0);
+	Color mulColor = generateColorI(255, 255, 255);
+	int stop = 0;
+	for (int rec_depth = 0; rec_depth <= MAX_RAY_DEPTH; rec_depth++) {
+		unsigned int tnear = UNSIGNED_MAX;
+		const Sphere* object = 0;
+		// find intersection of this ray with the sphere in the scene
+		for (unsigned i = 0; i < scene_size; ++i) {
+			unsigned int t0 = UNSIGNED_MAX, t1 = UNSIGNED_MAX;
+			if (intersect((scene+i), rayorig, raydir, &t0, &t1)) {
+				if (t0 < 0)
+					t0 = t1;
+				if (t0 < tnear) {
+					tnear = t0;
+					object = scene+i;
+				}
 			}
 		}
-	}
-	
-	if (!object) {
-            resColor = add(resColor, mulf(mulColor, 3));
-            break;
-        }
-        
-	Vec3f phit = mulf(add(rayorig, raydir), tnear);  // point of intersection
-	Vec3f nhit = sub(phit, object->center);  // normal at the intersection point
-	normalize_cl(&nhit);  // normalize normal direction
-	// If the normal and the view direction are not opposite to each other
-	// reverse the normal direction. That also means we are inside the sphere so set
-	// the inside bool to true. Finally reverse the sign of IdotN which we want
-	// positive.
-	float bias = 1e-4;  // add some bias to the point from which we will be tracing
-	if (dot_cl(raydir, nhit) > 0)
-		nhit = sub(generateVector3(0), nhit);  //, inside = true;
-	if ((object->reflection > 0) && rec_depth < MAX_RAY_DEPTH) {
-		float facingratio = -dot_cl(raydir, nhit);
-		// change the mix value to tweak the effect
-		float fresneleffect = mix_cl(pow(1 - facingratio, 3), 1, 0.1);
-		// compute reflection direction (not need to normalize because all vectors
-		// are already normalized)
-		raydir = mulf(sub(raydir, nhit), 2 * dot_cl(raydir, nhit));
-		normalize_cl(&raydir);
-                
-                rayorig = add(phit, mulf(nhit, bias)); //set rays for next iteration (recursion)
-                
-		//Vec3f reflection = generateVector3(1);//trace(scene, scene_size, add(phit, mulf(nhit, bias)), refldir, depth + 1); //TODO
-		// the result is a mix of reflection and refraction (if the sphere is transparent)
-		//surfaceColor = mul(object->surfaceColor, mulf(reflection, fresneleffect));
-                //stop = 1; //TODO
-                resColor = add(resColor, mul(mulColor, object->emissionColor));
-                mulColor = mul(mulColor, mulf(object->surfaceColor, fresneleffect));
-	} else {
-		// it's a diffuse object, no need to raytrace any further
-                Vec3f surfaceColor = generateVector3(0);
-		for (unsigned i = 0; i < scene_size; ++i) {
-			if ((scene+i)->emissionColor.x > 0) {
-				// this is a light
-				Vec3f transmission = { 1, 1, 1 };
-				Vec3f lightDirection = sub((scene+i)->center, phit);
-				normalize_cl(&lightDirection);
-				for (unsigned j = 0; j < scene_size; ++j) {
-					if (i != j) {
-						float t0, t1;
-						if (intersect((scene+j), add(phit, mulf(nhit, bias)),
-								lightDirection, &t0, &t1)) {
-							transmission = generateVector3(0);
-							break;
+		// if there's no intersection return black or background color
+		if (!object) {
+			resColor = addc(resColor, mulci(mulColor, 3 * FP_ONE));
+			break;
+		}
+
+		Color surfaceColor = object->surfaceColor;  // color of the ray/surface of the object intersected by the ray
+		Vec3i phit = mul(add(rayorig, raydir), tnear);  // point of intersection
+		Vec3i nhit = sub(phit, conv_fp(object->center, SCENE_COORDINATE_PRECISION));  // normal at the intersection point
+
+		normalize_cl(&nhit);  // normalize normal direction
+		// If the normal and the view direction are not opposite to each other
+		// reverse the normal direction. That also means we are inside the sphere so set
+		// the inside bool to true. Finally reverse the sign of IdotN which we want
+		// positive.
+		unsigned int bias = 65;  //1e-4;  // add some bias to the point from which we will be tracing
+		if (dot_cl(raydir, nhit) > 0)
+			nhit = sub(generateVectorI(0, 0, 0), nhit);  //invert normal if necessary
+		if ((object->reflection > 0) && rec_depth < MAX_RAY_DEPTH) {
+			int facingratio = (-dot_cl(raydir, nhit) >> FP_PRECISION);
+			// change the mix value to tweak the effect
+			unsigned int fresneleffect = ((unsigned int) (0.1 * FP_ONE)
+					+ (unsigned int) (0.9 * FP_ONE)
+							* (pow((FP_ONE - facingratio) / (float) FP_ONE, 3)));  //TODO pow in fixed-point
+			// compute reflection direction (not need to normalize because all vectors
+			// are already normalized)
+			raydir = mul(sub(raydir, nhit), 2 * dot_cl(raydir, nhit) >> FP_PRECISION);
+			normalize_cl(&raydir);
+			rayorig = add(phit, mul(nhit, bias));
+			//Color reflection = trace(add(phit, mul(nhit, bias)), refldir, depth + 1);
+			//surfaceColor = mul(object->surfaceColor, mul(reflection, fresneleffect));
+			resColor = addc(resColor, mulc(mulColor, object->emissionColor));
+			mulColor = mulc(mulColor, mulci(object->surfaceColor, fresneleffect));
+		} else {
+			// it's a diffuse object, no need to raytrace any further
+			for (unsigned i = 0; i < scene_size; ++i) {
+				if ((scene+i)->emissionColor.r > 0) {
+					// this is a light
+					unsigned int shadow = 0;
+					Vec3i lightDirection = sub(
+							conv_fp((scene+i)->center, SCENE_COORDINATE_PRECISION), phit);
+					normalize_cl(&lightDirection);
+					for (unsigned j = 0; j < scene_size; ++j) {
+						if (i != j) {
+							unsigned int t0, t1;
+							if (intersect(scene+j, add(phit, mul(nhit, bias)),
+									lightDirection, &t0, &t1)) {
+								shadow = 1;
+								break;
+							}
 						}
 					}
+					if (!shadow) {
+						surfaceColor = addc(surfaceColor,
+								mulc(
+										mulci(object->surfaceColor,
+												max(0,
+														(int) (dot_cl(nhit, lightDirection) >> FP_PRECISION))),
+										(scene+i)->emissionColor));
+					}
 				}
-				surfaceColor = add(surfaceColor, mul(
-								mul(object->surfaceColor,
-										mulf(transmission,
-												max((float)(0), dot_cl(nhit, lightDirection)))),
-								(scene+i)->emissionColor));
 			}
+			resColor = addc(resColor, mulc(mulColor, surfaceColor));
+			stop = 1;
 		}
-		resColor = add(resColor, mul(mulColor, surfaceColor));
-		stop = 1;
+		if (stop) {
+			break;
+		}
 	}
-	//resColor = add(resColor, add(surfaceColor, object->emissionColor));
-        if (stop) {
-            break;
-        }
-    }
-        
-        return resColor; //TODO rest of algorithm..
-	
+	return resColor;
 }
 
 __kernel void trace_cl(Sphere* scene, int scene_size, __global unsigned int* frame ){
-       int x = get_global_id(0);
-       int y = get_global_id(1);
-       int screenWidth = get_global_size(0);
-       int screenHeight = get_global_size(1);
-              
-       float invWidth = 1 / (float)(screenWidth);
-       float invHeight = 1 / (float)(screenHeight);
-       float fov = 30;
-       float aspectratio = screenWidth / (float)(screenHeight);
-       float angle = tan(M_PI * 0.5 * fov / 180.);
-       
-       float xx = (2 * ((x + 0.5) * invWidth) - 1) * angle * aspectratio;
-       float yy = (1 - 2 * ((y + 0.5) * invHeight)) * angle;
-       Vec3f raydir = { xx, yy, -1 };
-       normalize_cl(&raydir);
-       
-       Vec3f pixel = trace(scene, scene_size, generateVector3(0), raydir);       
-       
-       *(frame + x + y*screenWidth) = (min(255, (int)(pixel.x*255)) << 16) | (min(255, (int)(pixel.y*255)) << 8) | (min(255, (int)(pixel.z*255)));
+    int x = get_global_id(0);
+    int y = get_global_id(1);
+    int screenWidth = get_global_size(0);
+    int screenHeight = get_global_size(1);
+    
+    int invWidth_2x = (FP_ONE << 1) / screenWidth;
+    int invHeight_2x = (FP_ONE << 1) / screenHeight;
+    int aspectratio = (screenWidth << FP_PRECISION) / screenHeight;
+    int angle = (unsigned int) (0.267949194 * FP_ONE);
+    
+    int xx = (((int) ((((((x << FP_PRECISION) + (FP_ONE >> 1))
+    * (long) invWidth_2x) >> FP_PRECISION) - FP_ONE) * angle)
+    >> FP_PRECISION) * aspectratio) >> FP_PRECISION;
+    int yy = ((FP_ONE
+    - ((((y << FP_PRECISION) + (FP_ONE >> 1)) * (long) invHeight_2x)
+    >> FP_PRECISION)) * angle) >> FP_PRECISION;
+    Vec3i raydir = { xx, yy, -FP_ONE };
+    normalize_cl(&raydir);
+    Vec3i rayorig = generateVectorI(0, 0, 0);
+    
+    Color pixel = trace(scene, scene_size, rayorig, raydir);      
+    
+    *(frame + x + y*screenWidth) = (min((unsigned int)255, pixel.r) << 16) | (min((unsigned int)255, pixel.g) << 8) | (min((unsigned int)255, pixel.b));
 }

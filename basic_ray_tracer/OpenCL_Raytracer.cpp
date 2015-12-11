@@ -10,7 +10,7 @@ using namespace std;
 OpenCL_Raytracer::OpenCL_Raytracer(unsigned int screenWidth,
 		unsigned int screenHeight) :
 		Raytracer(screenWidth, screenHeight), scene_objects(0) {
-	char build_c[65535 * 8];
+	char build_c[65535 * 64];
 	size_t srcsize;
 
 	cl_int error;
@@ -101,6 +101,6 @@ void OpenCL_Raytracer::render(unsigned int* imageData) {
 	/* Await completion of all the above */
 	clFinish(command_queue);
 
-	objects[1]->center.z -= 0.5;  //TODO remove, only for testing
+	objects[1]->center.z -= 1;  //TODO remove, only for testing
 	//cout << "OpenCL Raytracer finished!" << endl;  //TODO remove
 }

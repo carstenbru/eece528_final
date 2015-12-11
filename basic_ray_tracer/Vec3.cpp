@@ -18,7 +18,6 @@ Color generateColor(Vec3f v) {
 Color generateColorI(Vec3f v) {
 	Color c = { v.x, v.y, v.z };
 	return c;
-	//return generateColor(v.x, v.y, v.z);
 }
 
 Vec3f generateVector(float x, float y, float z) {
@@ -86,16 +85,18 @@ Vec3i conv_fp(const Vec3i v1, int cur_precision) {
 }
 
 Vec3i mul(const Vec3i v1, int mul) {
-	Vec3i v = { (v1.x * (long) mul) >> FP_PRECISION, (v1.y
-			* (long) mul) >> FP_PRECISION, (v1.z * (long) mul) >> FP_PRECISION };
+	Vec3i v = { (v1.x * (long) mul) >> FP_PRECISION, (v1.y * (long) mul)
+			>> FP_PRECISION, (v1.z * (long) mul) >> FP_PRECISION };
 	return v;
 }
 
 Vec3i* normalize(Vec3i* v) {  //TODO do calulation in fp arithmetic
-	float nor2 = length2(*v) / (float) FP_ONE;
+	long int nor2 = length2(*v);
 	if (nor2 > 0) {
-		float invNor = 1 / sqrt(nor2);
-		v->x *= invNor, v->y *= invNor, v->z *= invNor;
+		unsigned int invNor = FP_ONE / sqrt(nor2 / (float) FP_ONE);
+		v->x = ((long)v->x*invNor) >> FP_PRECISION;
+		v->y = ((long)v->y*invNor) >> FP_PRECISION;
+		v->z = ((long)v->z*invNor) >> FP_PRECISION;
 	}
 	return v;
 }
@@ -106,7 +107,8 @@ long int length2(const Vec3i v) {
 }
 
 long int dot(const Vec3i v1, const Vec3i v2) {
-	return ((long)v1.x * (long)v2.x +(long) v1.y * (long)v2.y + (long)v1.z * (long)v2.z);
+	return ((long) v1.x * (long) v2.x + (long) v1.y * (long) v2.y
+			+ (long) v1.z * (long) v2.z);
 }
 
 float dot(const Vec3f v1, const Vec3f v2) {
