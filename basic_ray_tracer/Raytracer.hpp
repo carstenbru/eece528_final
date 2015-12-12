@@ -15,16 +15,16 @@ public:
 			screenWidth(screenWidth), screenHeight(screenHeight) {
 	}
 	virtual ~Raytracer() {}
-	virtual void render(unsigned int* imageData);
+	virtual void render(unsigned int* imageData) = 0;
 
 	void loadScene(std::string filename);
 	void generateSimpleScene();
 
 protected:
-	Vec3f trace(const Vec3f &rayorig, const Vec3f &raydir, const int &depth);
 	void parseScene(std::ifstream& in);
 	void parseSphere(std::ifstream& in);
-	Vec3f parseVector(std::string line);
+	Vec3i parseVector(std::string line);
+	Color parseColor(std::string line) ;
 	float parseFloat(std::string line);
 
 	std::vector<Sphere*> objects;
