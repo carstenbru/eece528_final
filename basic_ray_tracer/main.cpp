@@ -10,17 +10,20 @@
 #include <sstream>
 using namespace std;
 
+#define USE_SDL 1
+
+#if (USE_SDL == 1)
 #include "AdrizDrawing/AdrizDrawing.h"
 extern "C" SDL_Surface * create_surface(int w, int h);
 extern "C" SDL_Surface * Show_screen(int w, int h, char * name_window);
 extern "C" int print_string(int horiz_offset, int vert_offset, int color,
 		char *font, void* display, const char* string);
+#endif
 
 #define USE_OPENCL 0
 #define USE_PTHREADS 0
 #define USE_OPENMP 0
 
-#define USE_SDL 1
 
 //[comment]
 // In the main function, we will create the scene which is composed of 5 spheres
