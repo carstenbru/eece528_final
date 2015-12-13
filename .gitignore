@@ -15,3 +15,5 @@ obj/
 .qsys_edit
 db/
 incremental_db/
+*.qws
+greybox_tmp/

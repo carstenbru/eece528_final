@@ -42,8 +42,8 @@ Color Raytracer_int::trace(const Vec3i &rayorig, const Vec3i &raydir,
 	for (unsigned i = 0; i < objects.size(); ++i) {
 		unsigned int t0 = UNSIGNED_MAX, t1 = UNSIGNED_MAX;
 		if (intersect(objects[i], rayorig, raydir, &t0, &t1)) {
-			if (t0 < 0)
-				t0 = t1;
+			//if (t0 < 0)
+				//t0 = t1;
 			if (t0 < tnear) {
 				tnear = t0;
 				object = objects[i];
