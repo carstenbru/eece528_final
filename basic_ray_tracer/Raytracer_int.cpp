@@ -114,8 +114,8 @@ Color Raytracer_int::trace(const Vec3i &rayorig, const Vec3i &raydir,
 }
 
 Color Raytracer_int::trace_it(Vec3i &rayorig, Vec3i &raydir) {
-	Color resColor = generateColor(0, 0, 0);
-	Color mulColor = generateColor(1, 1, 1);
+	Color resColor = generateColorI(0, 0, 0);
+	Color mulColor = generateColorI(255, 255, 255);
 	int stop = 0;
 	for (int rec_depth = 0; rec_depth <= MAX_RAY_DEPTH; rec_depth++) {
 		unsigned int tnear = UNSIGNED_MAX;
