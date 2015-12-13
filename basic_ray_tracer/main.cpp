@@ -2,7 +2,6 @@
 #include "Raytracer_int.hpp"
 #include "Raytracer_pthreads.hpp"
 #include "Raytracer_OpenMP.hpp"
-#include "OpenCL_Raytracer.hpp"
 #include "Sphere.hpp"
 #include "timer.h"
 
@@ -12,6 +11,10 @@ using namespace std;
 
 #define USE_SDL 1
 
+#define USE_OPENCL 0
+#define USE_PTHREADS 0
+#define USE_OPENMP 0
+
 #if (USE_SDL == 1)
 #include "AdrizDrawing/AdrizDrawing.h"
 extern "C" SDL_Surface * create_surface(int w, int h);
@@ -20,9 +23,9 @@ extern "C" int print_string(int horiz_offset, int vert_offset, int color,
 		char *font, void* display, const char* string);
 #endif
 
-#define USE_OPENCL 0
-#define USE_PTHREADS 0
-#define USE_OPENMP 0
+#if (USE_OPENCL == 1)
+#include "OpenCL_Raytracer.hpp"
+#endif
 
 
 //[comment]
@@ -57,7 +60,12 @@ int main(int argc, char **argv) {
 
 	if (argc > 1) {
 		unsigned int frame[width][height];
+
+		ClockTimer timer;
+		timer.reset();
 		raytracer.render(&frame[0][0]);
+		double elapsed_secs = timer.get_elapsed() / 1000.0f;
+		cout << "rendering time: " << elapsed_secs << "s" << endl;
 
 		std::ofstream ofs(argv[1], std::ios::out | std::ios::binary);
 		ofs << "P6\n" << width << " " << height << "\n255\n";
