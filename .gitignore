@@ -1,13 +1,14 @@
 a.out
+*/Debug/basic_ray_tracer
+*/Release/basic_ray_tracer
 *.ppm
 .cproject
 .project
 .settings
-Debug/
-Release/
 *.o
 *.map
 *.elf
 *.a
+*.d
 *.objdump
 obj/
