@@ -20,6 +20,8 @@ extern "C" int print_string(int horiz_offset, int vert_offset, int color,
 #define USE_PTHREADS 0
 #define USE_OPENMP 0
 
+#define USE_SDL 1
+
 //[comment]
 // In the main function, we will create the scene which is composed of 5 spheres
 // and 1 light (which is also a sphere). Then, once the scene description is complete
@@ -29,8 +31,10 @@ int main(int argc, char **argv) {
 	const int width = 800;
 	const int height = 600;
 
+#if (USE_SDL == 1)
 	IBMP * frame;
 	frame = create_surface(width, height);
+#endif
 
 #if (USE_OPENCL == 1)
 	OpenCL_Raytracer raytracer(width, height);
@@ -64,6 +68,7 @@ int main(int argc, char **argv) {
 		}
 		ofs.close();
 	} else {
+#if (USE_SDL == 1)
 		IBMP * screen;
 		screen = Show_screen(frame->w, frame->h, "Ultimate Ray Tracer");
 
@@ -93,6 +98,9 @@ int main(int argc, char **argv) {
 		}
 
 		SDL_Quit();
+#else
+		cout << "error: compiled without SDL, provide a image file as parameter for output!" << endl;
+#endif
 	}
 
 	return 0;

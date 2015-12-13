@@ -12,3 +12,6 @@ a.out
 *.d
 *.objdump
 obj/
+.qsys_edit
+db/
+incremental_db/
