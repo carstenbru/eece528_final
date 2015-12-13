@@ -13,9 +13,11 @@
 class Raytracer {
 public:
 	Raytracer(unsigned int screenWidth, unsigned int screenHeight) :
-			screenWidth(screenWidth), screenHeight(screenHeight) {
+			screenWidth(screenWidth), screenHeight(screenHeight), real_frame_width(
+					screenWidth) {
 	}
-	virtual ~Raytracer() {}
+	virtual ~Raytracer() {
+	}
 	virtual void render(unsigned int* imageData) = 0;
 
 	void loadScene(std::string filename);
@@ -29,7 +31,7 @@ protected:
 	void parseScene(std::ifstream& in);
 	void parseSphere(std::ifstream& in);
 	Vec3i parseVector(std::string line);
-	Color parseColor(std::string line) ;
+	Color parseColor(std::string line);
 	float parseFloat(std::string line);
 
 	std::vector<Sphere*> objects;

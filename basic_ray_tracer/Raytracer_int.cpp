@@ -222,7 +222,7 @@ void Raytracer_int::render(unsigned int* imageData) {
 			normalize(&raydir);
 			Vec3i rayorig = generateVectorI(0, 0, 0);
 			Color pixel = trace_it(rayorig, raydir);
-			*(imageData + x + y * (skipPixels)) = (std::min((unsigned int) 255,
+			*(imageData + x + y * (real_frame_width)) = (std::min((unsigned int) 255,
 					pixel.r)) << 16 | (std::min((unsigned int) 255, pixel.g)) << 8
 					| (std::min((unsigned int) 255, pixel.b));
 		}
