@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "./Ray_tracing/Raytracer.hpp"
+#include "./Ray_tracing/Raytracer_int.hpp"
 #include "./Ray_tracing/Sphere.hpp"
 
 
@@ -62,16 +62,17 @@ int main(void)
 	vid_clean_screen(pReader, RED_24);
 
 
-    Raytracer raytracer(FRAME_WIDTH>>1, FRAME_HEIGHT>>1);
+    Raytracer_int raytracer(FRAME_WIDTH>>3, FRAME_HEIGHT>>3);
+    raytracer.setreal_frame_width(FRAME_WIDTH);
 
     raytracer.generateSimpleScene();
     unsigned char count=0;
     while (1)
    {
     	printf("%d\n",count);
-    	raytracer.render(pReader->DisplayFrame? (unsigned int*) pReader->Frame0_Base: (unsigned int*) pReader->Frame1_Base);
+    	raytracer.render(pReader->DisplayFrame? (unsigned int*) pReader->Frame0_Base: (unsigned int*) pReader->Frame0_Base);
     	// se activa el frame de video
-		VIPFR_ActiveDrawFrame(pReader);
+		//VIPFR_ActiveDrawFrame(pReader);
     	count++;
   }
 

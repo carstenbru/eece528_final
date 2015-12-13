@@ -8,7 +8,7 @@
 #ifndef DTYPES_H_
 #define DTYPES_H_
 
-#define NIOS 1
+#define NIOS 0
 
 #if NIOS==1
 	typedef unsigned long long uint64;

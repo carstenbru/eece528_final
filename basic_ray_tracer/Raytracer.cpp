@@ -37,7 +37,7 @@ using namespace std;
 void Raytracer::generateSimpleScene() {
 	objects.push_back(
 			generateSphere(generateVectorI(0, -10004, -20), 10000,
-					generateColor(51, 51, 51), 0, generateColor(0, 0, 0)));
+					generateColor(0.2, 0.2, 0.2), 0, generateColor(0, 0, 0)));
 	objects.push_back(
 			generateSphere(generateVectorI(0, 0, -20), 4,
 					generateColor(1.00, 0.32, 0.36), 1, generateColor(0, 0, 0)));

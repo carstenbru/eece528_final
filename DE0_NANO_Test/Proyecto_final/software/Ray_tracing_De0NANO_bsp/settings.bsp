@@ -2,11 +2,11 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>4-Dec-2015 9:23:20 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1449293000435</BspGeneratedUnixTimeStamp>
-        <BspGeneratedLocation>C:\FPGAs\Proyecto_final\software\Ray_tracing_De0NANO_bsp</BspGeneratedLocation>
-        <BspSettingsFile>settings.bsp</BspSettingsFile>
-        <SopcDesignFile>..\..\system.sopcinfo</SopcDesignFile>
+        <BspGeneratedTimeStamp>12.12.2015 19:13:43</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1449976423924</BspGeneratedUnixTimeStamp>
+        <BspGeneratedLocation>/home/carsten/Uni/parc/eece528_final/DE0_NANO_Test/Proyecto_final/software/Ray_tracing_De0NANO_bsp</BspGeneratedLocation>
+        <BspSettingsFile>./settings.bsp</BspSettingsFile>
+        <SopcDesignFile>../../system.sopcinfo</SopcDesignFile>
         <JdiFile>default</JdiFile>
         <Cpu>cpu</Cpu>
         <SchemaVersion>1.9</SchemaVersion>

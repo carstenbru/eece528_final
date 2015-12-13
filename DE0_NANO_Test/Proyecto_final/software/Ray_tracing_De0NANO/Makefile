@@ -129,12 +129,12 @@ BUILD_CONFIGS := default
 
 # This following VERSION comment indicates the version of the tool used to 
 # generate this makefile. A makefile variable is provided for VERSION as well. 
-# ACDS_VERSION: 15.0
-ACDS_VERSION := 15.0
+# ACDS_VERSION: 15.1
+ACDS_VERSION := 15.1
 
 # This following BUILD_NUMBER comment indicates the build number of the tool 
 # used to generate this makefile. 
-# BUILD_NUMBER: 145
+# BUILD_NUMBER: 185
 
 # Define path to the application ELF. 
 # It may be used by the makefile fragments so is defined before including them. 
@@ -142,6 +142,7 @@ ACDS_VERSION := 15.0
 ELF := Ray_tracing_De0NANO.elf
 
 # Paths to C, C++, and assembly source files.
+C_SRCS += vip_fr.c
 C_SRCS += Detect_button/boton.c
 C_SRCS += fonts/tahomabold_20.c
 C_SRCS += fonts/tahomabold_32.c
@@ -151,11 +152,11 @@ C_SRCS += graphic_lib/simple_graphics.c
 C_SRCS += graphic_lib/simple_text.c
 C_SRCS += touch_driver/TOUCH_EVENT.c
 C_SRCS += touch_driver/alt_touchscreen.c
-C_SRCS += vip_fr.c
+CXX_SRCS += main.cpp
 CXX_SRCS += Ray_tracing/Raytracer.cpp
 CXX_SRCS += Ray_tracing/Sphere.cpp
 CXX_SRCS += Ray_tracing/Vec3.cpp
-CXX_SRCS += main.cpp
+CXX_SRCS += Ray_tracing/Raytracer_int.cpp
 ASM_SRCS :=
 
 
@@ -860,14 +861,6 @@ help :
 	@$(ECHO) "    libs              - All libraries (including BSP)"
 	@$(ECHO) "    flash             - All flash files"	
 	@$(ECHO) "    mem_init_generate - All memory initialization files"
-ifeq ($(QSYS),1)
-	@$(ECHO) "    mem_init_install  - This target is deprecated for QSys Systems"
-	@$(ECHO) "                         --> Use the mem_init_generate target and then"
-	@$(ECHO) "                             add the generated meminit.qip file to your"
-	@$(ECHO) "                             Quartus II Project."
-else # if QSYS != 1
-	@$(ECHO) "    mem_init_install  - Copy memory initialization files to Quartus II project"
-endif # QSYS == 1
 	@$(ECHO)
 	@$(ECHO) "  Clean targets:"
 	@$(ECHO) "    clean_all         - Application and all libraries (including BSP)"

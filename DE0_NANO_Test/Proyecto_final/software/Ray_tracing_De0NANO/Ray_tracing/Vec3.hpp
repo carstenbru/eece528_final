@@ -3,82 +3,38 @@
 #ifndef VEC3_HPP_
 #define VEC3_HPP_
 
+#include "dtypes.h"
+
 typedef struct {
-	float x;
-	float y;
-	float z;
-} Vec3f;
+	unsigned int r;
+	unsigned int g;
+	unsigned int b;
+} Color;
 
-Vec3f generateVector(float x, float y, float z);
-Vec3f generateVector(float val);
+typedef struct {
+	int x;
+	int y;
+	int z;
+} Vec3i;
 
-float dot(const Vec3f v1, const Vec3f v2);
-Vec3f* normalize(Vec3f* v);
-float length2(const Vec3f v);
-Vec3f sub(const Vec3f v1, const Vec3f v2);
-Vec3f add(const Vec3f v1, const Vec3f v2);
-Vec3f mul(const Vec3f v1, float mul);
-Vec3f mul(const Vec3f v1, const Vec3f v2);
+#define FP_PRECISION (16)
+#define FP_ONE (1<<FP_PRECISION)
 
-/*template<typename T>
-class Vec3 {
-public:
-	T x, y, z;
-	Vec3() :
-			x(T(0)), y(T(0)), z(T(0)) {
-	}
-	Vec3(T xx) :
-			x(xx), y(xx), z(xx) {
-	}
-	Vec3(T xx, T yy, T zz) :
-			x(xx), y(yy), z(zz) {
-	}
-	Vec3& normalize() {
-		T nor2 = length2();
-		if (nor2 > 0) {
-			T invNor = 1 / sqrt(nor2);
-			x *= invNor, y *= invNor, z *= invNor;
-		}
-		return *this;
-	}
-	Vec3<T> operator *(const T &f) const {
-		return Vec3<T>(x * f, y * f, z * f);
-	}
-	Vec3<T> operator *(const Vec3<T> &v) const {
-		return Vec3<T>(x * v.x, y * v.y, z * v.z);
-	}
-	T dot(const Vec3<T> &v) const {
-		return x * v.x + y * v.y + z * v.z;
-	}
-	Vec3<T> operator -(const Vec3<T> &v) const {
-		return Vec3<T>(x - v.x, y - v.y, z - v.z);
-	}
-	Vec3<T> operator +(const Vec3<T> &v) const {
-		return Vec3<T>(x + v.x, y + v.y, z + v.z);
-	}
-	Vec3<T>& operator +=(const Vec3<T> &v) {
-		x += v.x, y += v.y, z += v.z;
-		return *this;
-	}
-	Vec3<T>& operator *=(const Vec3<T> &v) {
-		x *= v.x, y *= v.y, z *= v.z;
-		return *this;
-	}
-	Vec3<T> operator -() const {
-		return Vec3<T>(-x, -y, -z);
-	}
-	T length2() const {
-		return x * x + y * y + z * z;
-	}
-	T length() const {
-		return sqrt(length2());
-	}
-	friend std::ostream & operator <<(std::ostream &os, const Vec3<T> &v) {
-		os << "[" << v.x << " " << v.y << " " << v.z << "]";
-		return os;
-	}
-};
+Color generateColorI(unsigned int r, unsigned int g, unsigned int b);
+Color generateColor(float r, float g, float b);
+Vec3i generateVectorI(int x, int y, int z);
 
-typedef Vec3<float> Vec3f;*/
+Color add(const Color v1, const Color v2);
+Color mul(const Color v1, int mul);
+Color mul(const Color v1, const Color v2);
+
+Vec3i add(const Vec3i v1, const Vec3i v2);
+Vec3i sub(const Vec3i v1, const Vec3i v2);
+Vec3i mul(const Vec3i v1, int mul);
+Vec3i conv_fp(const Vec3i v1, int cur_precision);
+int64 dot(const Vec3i v1, const Vec3i v2);
+Vec3i* normalize(Vec3i* v);
+int64 length2(const Vec3i v);
+
 
 #endif

@@ -93,12 +93,12 @@ OBJ_DIR := ./obj
 
 # This following VERSION comment indicates the version of the tool used to 
 # generate this makefile. A makefile variable is provided for VERSION as well. 
-# ACDS_VERSION: 15.0
-ACDS_VERSION := 15.0
+# ACDS_VERSION: 15.1
+ACDS_VERSION := 15.1
 
 # This following BUILD_NUMBER comment indicates the build number of the tool 
 # used to generate this makefile. 
-# BUILD_NUMBER: 145
+# BUILD_NUMBER: 185
 
 SETTINGS_FILE := settings.bsp
 SOPC_FILE := ../../system.sopcinfo
@@ -337,6 +337,7 @@ hal_C_LIB_SRCS := \
 	$(hal_SRCS_ROOT)/src/alt_open.c \
 	$(hal_SRCS_ROOT)/src/alt_printf.c \
 	$(hal_SRCS_ROOT)/src/alt_putchar.c \
+	$(hal_SRCS_ROOT)/src/alt_putcharbuf.c \
 	$(hal_SRCS_ROOT)/src/alt_putstr.c \
 	$(hal_SRCS_ROOT)/src/alt_read.c \
 	$(hal_SRCS_ROOT)/src/alt_release_fd.c \
