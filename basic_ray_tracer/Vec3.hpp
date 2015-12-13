@@ -3,6 +3,8 @@
 #ifndef VEC3_HPP_
 #define VEC3_HPP_
 
+#include "dtypes.h"
+
 typedef struct {
 	unsigned int r;
 	unsigned int g;
@@ -30,9 +32,9 @@ Vec3i add(const Vec3i v1, const Vec3i v2);
 Vec3i sub(const Vec3i v1, const Vec3i v2);
 Vec3i mul(const Vec3i v1, int mul);
 Vec3i conv_fp(const Vec3i v1, int cur_precision);
-long int dot(const Vec3i v1, const Vec3i v2);
+int64 dot(const Vec3i v1, const Vec3i v2);
 Vec3i* normalize(Vec3i* v);
-long int length2(const Vec3i v);
+int64 length2(const Vec3i v);
 
 
 #endif

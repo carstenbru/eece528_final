@@ -51,28 +51,28 @@ Vec3i conv_fp(const Vec3i v1, int cur_precision) {
 }
 
 Vec3i mul(const Vec3i v1, int mul) {
-	Vec3i v = { (v1.x * (long) mul) >> FP_PRECISION, (v1.y * (long) mul)
-			>> FP_PRECISION, (v1.z * (long) mul) >> FP_PRECISION };
+	Vec3i v = { (v1.x * (int64) mul) >> FP_PRECISION, (v1.y * (int64) mul)
+			>> FP_PRECISION, (v1.z * (int64) mul) >> FP_PRECISION };
 	return v;
 }
 
 Vec3i* normalize(Vec3i* v) {  //TODO do calulation in fp arithmetic
-	long int nor2 = length2(*v);
+	int64  nor2 = length2(*v);
 	if (nor2 > 0) {
 		unsigned int invNor = FP_ONE / sqrt(nor2 / (float) FP_ONE);
-		v->x = ((long)v->x*invNor) >> FP_PRECISION;
-		v->y = ((long)v->y*invNor) >> FP_PRECISION;
-		v->z = ((long)v->z*invNor) >> FP_PRECISION;
+		v->x = ((int64)v->x*invNor) >> FP_PRECISION;
+		v->y = ((int64)v->y*invNor) >> FP_PRECISION;
+		v->z = ((int64)v->z*invNor) >> FP_PRECISION;
 	}
 	return v;
 }
 
-long int length2(const Vec3i v) {
-	return (v.x * (long) v.x + v.y * (long) v.y + v.z * (long) v.z)
+int64 length2(const Vec3i v) {
+	return (v.x * (int64) v.x + v.y * (int64) v.y + v.z * (int64) v.z)
 			>> (FP_PRECISION);
 }
 
-long int dot(const Vec3i v1, const Vec3i v2) {
-	return ((long) v1.x * (long) v2.x + (long) v1.y * (long) v2.y
-			+ (long) v1.z * (long) v2.z);
+int64 dot(const Vec3i v1, const Vec3i v2) {
+	return ((int64) v1.x * (int64) v2.x + (int64) v1.y * (int64) v2.y
+			+ (int64) v1.z * (int64) v2.z);
 }

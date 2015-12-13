@@ -13,6 +13,8 @@
 #define MAX_RAY_DEPTH 10
 #define UNSIGNED_MAX 0xFFFFFFFF
 
+
+
 class Raytracer_int : public Raytracer {
 public:
 	Raytracer_int(unsigned int screenWidth, unsigned int screenHeight) :

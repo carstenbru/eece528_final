@@ -213,16 +213,16 @@ void Raytracer_int::render(unsigned int* imageData) {
 	for (unsigned y = 0; y < screenHeight; ++y) {
 		for (unsigned x = 0; x < screenWidth; ++x) {
 			int xx = (((int) ((((((x << FP_PRECISION) + (FP_ONE >> 1))
-					* (long) invWidth_2x) >> FP_PRECISION) - FP_ONE) * angle)
+					* (int64) invWidth_2x) >> FP_PRECISION) - FP_ONE) * angle)
 					>> FP_PRECISION) * aspectratio) >> FP_PRECISION;
 			int yy = ((FP_ONE
-					- ((((y << FP_PRECISION) + (FP_ONE >> 1)) * (long) invHeight_2x)
+					- ((((y << FP_PRECISION) + (FP_ONE >> 1)) * (int64) invHeight_2x)
 							>> FP_PRECISION)) * angle) >> FP_PRECISION;
 			Vec3i raydir = { xx, yy, -FP_ONE };
 			normalize(&raydir);
 			Vec3i rayorig = generateVectorI(0, 0, 0);
 			Color pixel = trace_it(rayorig, raydir);
-			*(imageData + x + y * screenWidth) = (std::min((unsigned int) 255,
+			*(imageData + x + y * (skipPixels)) = (std::min((unsigned int) 255,
 					pixel.r)) << 16 | (std::min((unsigned int) 255, pixel.g)) << 8
 					| (std::min((unsigned int) 255, pixel.b));
 		}

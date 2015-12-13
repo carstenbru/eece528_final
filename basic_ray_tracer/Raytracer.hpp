@@ -5,6 +5,7 @@
 
 #include "Vec3.hpp"
 #include "Sphere.hpp"
+#include "dtypes.h"
 
 #ifndef RAYTRACER_HPP_
 #define RAYTRACER_HPP_
@@ -20,6 +21,10 @@ public:
 	void loadScene(std::string filename);
 	void generateSimpleScene();
 
+	void setreal_frame_width(unsigned int real_frame_width) {
+		this->real_frame_width = real_frame_width;
+	}
+
 protected:
 	void parseScene(std::ifstream& in);
 	void parseSphere(std::ifstream& in);
@@ -31,6 +36,7 @@ protected:
 
 	unsigned int screenWidth;
 	unsigned int screenHeight;
+	unsigned int real_frame_width;
 };
 
 #endif
