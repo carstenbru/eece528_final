@@ -53,9 +53,11 @@ Color trace_it(Vec3i &rayorig, Vec3i &raydir, std::vector<Sphere*>& objects) {
 		if ((object->reflection > 0) && rec_depth < MAX_RAY_DEPTH) {
 			int facingratio = (-dot(raydir, nhit) >> FP_PRECISION);
 			// change the mix value to tweak the effect
-			unsigned int fresneleffect = ((unsigned int) (0.1 * FP_ONE)
-					+ (unsigned int) (0.9 * FP_ONE)
-							* (pow((FP_ONE - facingratio) / (float) FP_ONE, 3)));  //TODO pow in fixed-point
+			facingratio = FP_ONE - facingratio;
+						unsigned int fr2 = (facingratio * (int64)facingratio) >> FP_PRECISION;
+						unsigned int fr3 = (fr2 * facingratio) >> FP_PRECISION;
+						fr3 = (((unsigned int)(0.9*FP_ONE) * fr3)) >> FP_PRECISION;
+						unsigned int fresneleffect = ((unsigned int) (0.1 * FP_ONE)) + fr3;
 			// compute reflection direction (not need to normalize because all vectors
 			// are already normalized)
 			raydir = mul(sub(raydir, nhit), 2 * dot(raydir, nhit) >> FP_PRECISION);

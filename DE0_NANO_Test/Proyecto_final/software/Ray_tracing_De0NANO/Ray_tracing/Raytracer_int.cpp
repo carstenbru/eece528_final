@@ -220,7 +220,7 @@ void Raytracer_int::render(unsigned int* imageData) {
 							>> FP_PRECISION)) * angle) >> FP_PRECISION;
 			Vec3i raydir = { xx, yy, -FP_ONE };
 			normalize(&raydir);
-			Vec3i rayorig = generateVectorI(0, 0, 0);
+			Vec3i rayorig = generateVectorI(0, 0, 100);
 			Color pixel = trace_it(rayorig, raydir);
 			*(imageData + x + y * (real_frame_width)) = (std::min((unsigned int) 255,
 					pixel.r)) << 16 | (std::min((unsigned int) 255, pixel.g)) << 8
