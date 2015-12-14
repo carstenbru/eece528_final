@@ -43,7 +43,7 @@ Color Raytracer_int::trace(const Vec3i &rayorig, const Vec3i &raydir,
 		unsigned int t0 = UNSIGNED_MAX, t1 = UNSIGNED_MAX;
 		if (intersect(objects[i], rayorig, raydir, &t0, &t1)) {
 			//if (t0 < 0)
-				//t0 = t1;
+			//t0 = t1;
 			if (t0 < tnear) {
 				tnear = t0;
 				object = objects[i];
@@ -69,9 +69,11 @@ Color Raytracer_int::trace(const Vec3i &rayorig, const Vec3i &raydir,
 	if ((object->reflection > 0) && depth < MAX_RAY_DEPTH) {
 		int facingratio = (-dot(raydir, nhit) >> FP_PRECISION);
 		// change the mix value to tweak the effect
-		unsigned int fresneleffect = ((unsigned int) (0.1 * FP_ONE)
-				+ (unsigned int) (0.9 * FP_ONE)
-						* (pow((FP_ONE - facingratio) / (float) FP_ONE, 3)));  //TODO pow in fixed-point
+		facingratio = FP_ONE - facingratio;
+		unsigned int fr2 = (facingratio * (int64) facingratio) >> FP_PRECISION;
+		unsigned int fr3 = (fr2 * facingratio) >> FP_PRECISION;
+		fr3 = (((unsigned int) (0.9 * FP_ONE) * fr3)) >> FP_PRECISION;
+		unsigned int fresneleffect = ((unsigned int) (0.1 * FP_ONE)) + fr3;
 		// compute reflection direction (not need to normalize because all vectors
 		// are already normalized)
 		Vec3i refldir = mul(sub(raydir, nhit),
@@ -153,9 +155,11 @@ Color Raytracer_int::trace_it(Vec3i &rayorig, Vec3i &raydir) {
 		if ((object->reflection > 0) && rec_depth < MAX_RAY_DEPTH) {
 			int facingratio = (-dot(raydir, nhit) >> FP_PRECISION);
 			// change the mix value to tweak the effect
-			unsigned int fresneleffect = ((unsigned int) (0.1 * FP_ONE)
-					+ (unsigned int) (0.9 * FP_ONE)
-							* (pow((FP_ONE - facingratio) / (float) FP_ONE, 3)));  //TODO pow in fixed-point
+			facingratio = FP_ONE - facingratio;
+			unsigned int fr2 = (facingratio * (int64) facingratio) >> FP_PRECISION;
+			unsigned int fr3 = (fr2 * facingratio) >> FP_PRECISION;
+			fr3 = (((unsigned int) (0.9 * FP_ONE) * fr3)) >> FP_PRECISION;
+			unsigned int fresneleffect = ((unsigned int) (0.1 * FP_ONE)) + fr3;
 			// compute reflection direction (not need to normalize because all vectors
 			// are already normalized)
 			raydir = mul(sub(raydir, nhit), 2 * dot(raydir, nhit) >> FP_PRECISION);

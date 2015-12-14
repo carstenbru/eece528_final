@@ -25,26 +25,10 @@ bool intersect(Sphere* sphere, const Vec3i rayorig, const Vec3i raydir,
 	int64 d2 = (dot(l,l) >> FP_PRECISION) - (((int64)tca * tca) >> FP_PRECISION);
 	if (d2 > (((int64)sphere->radius2) << FP_PRECISION))
 		return false;
-	//int thc = sqrt((float)sphere->radius2 - d2/65536.0f) * FP_ONE;!
-	int thc = ((int)sqrt(((int64)sphere->radius2 << FP_PRECISION) - (d2))) * 256;
+	int thc = ((int)sqrt(((int64)sphere->radius2 << FP_PRECISION) - (d2))) * 256; //TODO use integer sqrt instead of float algorithm
 	*t0 = tca - thc;
 	*t1 = tca + thc;
 
 	return true;
 }
 
-/*
-bool intersect(Sphere* sphere, const Vec3i rayorig, const Vec3i raydir,
-		unsigned int* t0, unsigned int* t1) {
-	Vec3i l = sub(conv_fp(sphere->center, SCENE_COORDINATE_PRECISION), rayorig);
-	int tca = dot(l,raydir) >> FP_PRECISION;
-	int64 d2 = (dot(l,l) >> FP_PRECISION) - (((int64)tca * tca) >> FP_PRECISION);
-	int thc = sqrt((float)sphere->radius2 - d2/65536.0f) * FP_ONE; //TODO srqt in int/fp!
-	*t0 = tca - thc;
-	*t1 = tca + thc;
-
-	if ((d2 > (((int64)sphere->radius2) << FP_PRECISION)) || (tca < 0))
-			return false;
-	else
-	  return true;
-}*/

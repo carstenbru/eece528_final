@@ -96,7 +96,7 @@ Vec3i mul(const Vec3i v1, int mul) {
 	return v;
 }
 
-Vec3i* normalize_cl(Vec3i* v) {  //TODO do calulation in fp arithmetic
+Vec3i* normalize_cl(Vec3i* v) {
 	float nor2 = length2(*v) / (float) FP_ONE;
 	if (nor2 > 0) {
 		float invNor = 1 / sqrt(nor2);
@@ -122,7 +122,7 @@ bool intersect(Sphere* sphere, const Vec3i rayorig, const Vec3i raydir, unsigned
 	long int d2 = (dot_cl(l,l) >> FP_PRECISION) - (((long)tca * tca) >> FP_PRECISION);
 	if (d2 > (((long)sphere->radius2) << FP_PRECISION))
 		return false;
-	int thc = sqrt((float)sphere->radius2 - d2/65536.0f) * FP_ONE; //TODO srqt in int/fp!
+	int thc = sqrt((float)sphere->radius2 - d2/65536.0f) * FP_ONE;
 	*t0 = tca - thc;
 	*t1 = tca + thc;
 
@@ -171,7 +171,7 @@ Color trace(Sphere* scene, int scene_size, Vec3i rayorig, Vec3i raydir) {
 			// change the mix value to tweak the effect
 			unsigned int fresneleffect = ((unsigned int) (0.1 * FP_ONE)
 					+ (unsigned int) (0.9 * FP_ONE)
-							* (pow((FP_ONE - facingratio) / (float) FP_ONE, 3)));  //TODO pow in fixed-point
+							* (pow((FP_ONE - facingratio) / (float) FP_ONE, 3)));
 			// compute reflection direction (not need to normalize because all vectors
 			// are already normalized)
 			raydir = mul(sub(raydir, nhit), 2 * dot_cl(raydir, nhit) >> FP_PRECISION);
