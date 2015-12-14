@@ -1,0 +1,18 @@
+Fitter Status : Successful - Sat Dec 12 21:59:33 2015
+Quartus II 64-Bit Version : 15.0.0 Build 145 04/22/2015 Patches 0.01we SJ Web Edition
+Revision Name : deca_graphics
+Top-level Entity Name : deca_graphics
+Family : MAX 10
+Device : 10M50DAF484C6GES
+Timing Models : Preliminary
+Total logic elements : 16,338 / 49,760 ( 33 % )
+    Total combinational functions : 13,484 / 49,760 ( 27 % )
+    Dedicated logic registers : 11,256 / 49,760 ( 23 % )
+Total registers : 11414
+Total pins : 152 / 360 ( 42 % )
+Total virtual pins : 0
+Total memory bits : 969,652 / 1,677,312 ( 58 % )
+Embedded Multiplier 9-bit elements : 6 / 288 ( 2 % )
+Total PLLs : 3 / 4 ( 75 % )
+UFM blocks : 0 / 1 ( 0 % )
+ADC blocks : 0 / 2 ( 0 % )

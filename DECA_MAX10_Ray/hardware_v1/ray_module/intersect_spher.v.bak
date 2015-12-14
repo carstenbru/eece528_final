@@ -1,0 +1,27 @@
+module intersect_sphere(centerx,
+								centery,
+								centerz,
+								rayorig_x,
+								rayorig_y,
+								rayorig_z,
+								raydir_x,
+								raydir_y,
+								raydir_z,
+								t0,
+								t1,
+								result);
+input [31:0]centerx;
+input [31:0]centery;
+input [31:0]centerz,
+input [31:0]rayorig_x;
+input [31:0]rayorig_y;
+input [31:0]rayorig_z;
+input [31:0]raydir_x;
+input [31:0]raydir_y;
+input [31:0]raydir_z;
+output [31:0]t0;
+output [31:0]t1;
+output result;
+
+		
+endmodule
