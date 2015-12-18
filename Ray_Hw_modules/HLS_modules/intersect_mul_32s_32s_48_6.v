@@ -8,20 +8,20 @@
 
 `timescale 1 ns / 1 ps
 
-module intersect_mul_32s_32s_32_6_MulnS_0(clk, ce, a, b, p);
+module intersect_mul_32s_32s_48_6_MulnS_0(clk, ce, a, b, p);
 input clk;
 input ce;
 input[32 - 1 : 0] a; // synthesis attribute keep a "true"
 input[32 - 1 : 0] b; // synthesis attribute keep b "true"
-output[32 - 1 : 0] p;
+output[48 - 1 : 0] p;
 
 reg signed [32 - 1 : 0] a_reg0;
 reg signed [32 - 1 : 0] b_reg0;
-wire signed [32 - 1 : 0] tmp_product;
-reg signed [32 - 1 : 0] buff0;
-reg signed [32 - 1 : 0] buff1;
-reg signed [32 - 1 : 0] buff2;
-reg signed [32 - 1 : 0] buff3;
+wire signed [48 - 1 : 0] tmp_product;
+reg signed [48 - 1 : 0] buff0;
+reg signed [48 - 1 : 0] buff1;
+reg signed [48 - 1 : 0] buff2;
+reg signed [48 - 1 : 0] buff3;
 
 assign p = buff3;
 assign tmp_product = a_reg0 * b_reg0;
@@ -38,7 +38,7 @@ end
 endmodule
 
 `timescale 1 ns / 1 ps
-module intersect_mul_32s_32s_32_6(
+module intersect_mul_32s_32s_48_6(
     clk,
     reset,
     ce,
@@ -60,7 +60,7 @@ output[dout_WIDTH - 1:0] dout;
 
 
 
-intersect_mul_32s_32s_32_6_MulnS_0 intersect_mul_32s_32s_32_6_MulnS_0_U(
+intersect_mul_32s_32s_48_6_MulnS_0 intersect_mul_32s_32s_48_6_MulnS_0_U(
     .clk( clk ),
     .ce( ce ),
     .a( din0 ),
