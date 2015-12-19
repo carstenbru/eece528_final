@@ -126,8 +126,8 @@ Color Raytracer_int::trace_it(Vec3i &rayorig, Vec3i &raydir) {
 		for (unsigned i = 0; i < objects.size(); ++i) {
 			unsigned int t0 = UNSIGNED_MAX, t1 = UNSIGNED_MAX;
 			if (intersect(objects[i], rayorig, raydir, &t0, &t1)) {
-				if (t0 < 0)
-					t0 = t1;
+				//if (t0 < 0)
+				//	t0 = t1;
 				if (t0 < tnear) {
 					tnear = t0;
 					object = objects[i];
@@ -232,5 +232,5 @@ void Raytracer_int::render(unsigned int* imageData) {
 		}
 	}
 
-	objects[1]->center.z -= 1;  //TODO remove, only for testing
+	//objects[1]->center.z -= 1;  //TODO remove, only for testing
 }

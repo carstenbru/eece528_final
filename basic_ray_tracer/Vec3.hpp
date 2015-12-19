@@ -3,6 +3,8 @@
 #ifndef VEC3_HPP_
 #define VEC3_HPP_
 
+#define USE_FP_SQRT_ALGO 0
+
 #include "dtypes.h"
 
 typedef struct {
@@ -36,5 +38,6 @@ int64 dot(const Vec3i v1, const Vec3i v2);
 Vec3i* normalize(Vec3i* v);
 int64 length2(const Vec3i v);
 
+unsigned int fix64_sqrt(uint64 num);
 
 #endif

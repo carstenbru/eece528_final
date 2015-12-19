@@ -101,6 +101,6 @@ void OpenCL_Raytracer::render(unsigned int* imageData) {
 	/* Await completion of all the above */
 	clFinish(command_queue);
 
-	objects[1]->center.z -= 1;  //TODO remove, only for testing
+	//objects[1]->center.z -= 1;  //TODO remove, only for testing
 	//cout << "OpenCL Raytracer finished!" << endl;  //TODO remove
 }

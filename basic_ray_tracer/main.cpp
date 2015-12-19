@@ -34,8 +34,8 @@ extern "C" int print_string(int horiz_offset, int vert_offset, int color,
 // we render that scene, by calling the render() function.
 //[/comment]
 int main(int argc, char **argv) {
-	const int width = 800;
-	const int height = 600;
+	const int width = 640;
+	const int height = 480;
 
 #if (USE_SDL == 1)
 	IBMP * frame;
