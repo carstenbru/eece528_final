@@ -7,7 +7,9 @@ unsigned int fix64_sqrt(uint64 num) {
 	uint64 result = 0UL;
 
 	// second-to-top bit
-	uint64 bit = (uint64)0x4000000000000000;//1UL << (62);
+	//uint64 bit = (uint64)0x4000000000000000;//1UL << (62);
+	uint64 bit = 0x40000000;
+	bit <<= 32;
 
 	while (bit > num) {
 		bit >>= 2;
@@ -110,7 +112,7 @@ Vec3i mul(const Vec3i v1, int mul) {
 	return v;
 }
 
-Vec3i* normalize(Vec3i* v) {  //TODO do calulation in fp arithmetic
+Vec3i* normalize(Vec3i* v) {
 	int64 nor2 = length2(*v);
 	if (nor2 > 0) {
 #if (USE_FP_SQRT_ALGO == 1)
