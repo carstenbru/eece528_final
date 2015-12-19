@@ -117,7 +117,7 @@ unsigned char intersect(Sphere* sphere, const Vec3i rayorig, const Vec3i raydir,
 	int64 d2 = (dot(l,l) >> FP_PRECISION) - (((int64)tca * tca) >> FP_PRECISION);
 	if (d2 > (((int64)sphere->radius2) << FP_PRECISION))
 		return 0;
-	int thc = fix64_sqrt(((int64)sphere->radius2 << FP_PRECISION) - (d2))*256;
+	int thc = fix64_sqrt(((int64)sphere->radius2 << FP_PRECISION) - (d2));
 	*t0 = tca - thc;
 	*t1 = tca + thc;
 
