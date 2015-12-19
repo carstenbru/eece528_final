@@ -1,6 +1,60 @@
 #include "Vec3.hpp"
 #include <math.h>
 
+#if (USE_FP_SQRT_ALGO == 1)
+//adapted from https://github.com/asik/FixedMath.Net/issues/6
+unsigned int fix64_sqrt(uint64 num) {
+	uint64 result = 0UL;
+
+	// second-to-top bit
+	uint64 bit = 1UL << (62);
+
+	while (bit > num) {
+		bit >>= 2;
+	}
+
+	// The main part is executed twice, in order to avoid
+	// using 128 bit values in computations.
+	for (int i = 0; i < 2; ++i) {
+		// First we get the top 48 bits of the answer.
+		while (bit != 0) {
+			if (num >= result + bit) {
+				num -= result + bit;
+				result = (result >> 1) + bit;
+			} else {
+				result = result >> 1;
+			}
+			bit >>= 2;
+		}
+
+		if (i == 0) {
+			// Then process it again to get the lowest 16 bits.
+			if (num > (1UL << (16)) - 1) {
+				// The remainder 'num' is too large to be shifted left
+				// by 32, so we have to add 1 to result manually and
+				// adjust 'num' accordingly.
+				// num = a - (result + 0.5)^2
+				//       = num + result^2 - (result + 0.5)^2
+				//       = num - result - 0.5
+				num -= result;
+				num = (num << (16)) - 0x4000UL;
+				result = (result << (16)) + 0x4000UL;
+			} else {
+				num <<= (16);
+				result <<= (16);
+			}
+
+			bit = 1UL << (14);
+		}
+	}
+	// Finally, if next bit would have been 1, round the result upwards.
+	if (num > result) {
+		++result;
+	}
+	return result;
+}
+#endif
+
 Color generateColorI(unsigned int r, unsigned int g, unsigned int b) {
 	Color c = { r, g, b };
 	return c;
@@ -57,12 +111,16 @@ Vec3i mul(const Vec3i v1, int mul) {
 }
 
 Vec3i* normalize(Vec3i* v) {  //TODO do calulation in fp arithmetic
-	int64  nor2 = length2(*v);
+	int64 nor2 = length2(*v);
 	if (nor2 > 0) {
+#if (USE_FP_SQRT_ALGO == 1)
+		unsigned int invNor = ((uint64)FP_ONE * FP_ONE) / fix64_sqrt(nor2);
+#else
 		unsigned int invNor = FP_ONE / sqrt(nor2 / (float) FP_ONE);
-		v->x = ((int64)v->x*invNor) >> FP_PRECISION;
-		v->y = ((int64)v->y*invNor) >> FP_PRECISION;
-		v->z = ((int64)v->z*invNor) >> FP_PRECISION;
+#endif
+		v->x = ((int64) v->x * invNor) >> FP_PRECISION;
+		v->y = ((int64) v->y * invNor) >> FP_PRECISION;
+		v->z = ((int64) v->z * invNor) >> FP_PRECISION;
 	}
 	return v;
 }

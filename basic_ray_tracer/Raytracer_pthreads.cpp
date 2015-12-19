@@ -162,6 +162,6 @@ void Raytracer_pthreads::render(unsigned int* imageData) {
 		pthread_join(threads[i], NULL);
 	}
 
-	objects[1]->center.z -= 1;  //TODO remove, only for testing
+	//objects[1]->center.z -= 1;  //TODO remove, only for testing
 }
 

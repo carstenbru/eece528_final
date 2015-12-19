@@ -30,6 +30,6 @@ void Raytracer_OpenMP::render(unsigned int* imageData) {
 		}
 	}
 
-	objects[1]->center.z -= 1;  //TODO remove, only for testing
+	//objects[1]->center.z -= 1;  //TODO remove, only for testing
 
 }
