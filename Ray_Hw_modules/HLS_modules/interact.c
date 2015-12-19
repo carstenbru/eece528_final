@@ -54,7 +54,9 @@ unsigned int fix64_sqrt(uint64 num) {
     uint64 result = 0UL;
 
     // second-to-top bit
-    uint64 bit = 1UL << (62);
+    //uint64 bit = 1UL << (62);
+    uint64 bit = 0x40000000;
+    bit <<= 32;
 
     while (bit > num) {
         bit >>= 2;
@@ -87,6 +89,7 @@ unsigned int fix64_sqrt(uint64 num) {
                 num -= result;
                 num = (num << (16)) - 0x4000UL;
                 result = (result << (16)) + 0x4000UL;
+
             }
             else {
                 num <<= (16);
