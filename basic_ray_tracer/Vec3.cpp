@@ -7,7 +7,7 @@ unsigned int fix64_sqrt(uint64 num) {
 	uint64 result = 0UL;
 
 	// second-to-top bit
-	uint64 bit = 1UL << (62);
+	uint64 bit = (uint64)0x4000000000000000;//1UL << (62);
 
 	while (bit > num) {
 		bit >>= 2;
@@ -29,7 +29,7 @@ unsigned int fix64_sqrt(uint64 num) {
 
 		if (i == 0) {
 			// Then process it again to get the lowest 16 bits.
-			if (num > (1UL << (16)) - 1) {
+			if (num > (uint64)65535) {
 				// The remainder 'num' is too large to be shifted left
 				// by 32, so we have to add 1 to result manually and
 				// adjust 'num' accordingly.
@@ -37,14 +37,14 @@ unsigned int fix64_sqrt(uint64 num) {
 				//       = num + result^2 - (result + 0.5)^2
 				//       = num - result - 0.5
 				num -= result;
-				num = (num << (16)) - 0x4000UL;
-				result = (result << (16)) + 0x4000UL;
+				num = (num << (16)) - (uint64)0x4000;
+				result = (result << (16)) + (uint64)0x4000;
 			} else {
 				num <<= (16);
 				result <<= (16);
 			}
 
-			bit = 1UL << (14);
+			bit = ((uint64)1) << (14);
 		}
 	}
 	// Finally, if next bit would have been 1, round the result upwards.

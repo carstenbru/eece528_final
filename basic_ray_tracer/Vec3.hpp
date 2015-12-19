@@ -3,7 +3,7 @@
 #ifndef VEC3_HPP_
 #define VEC3_HPP_
 
-#define USE_FP_SQRT_ALGO 0
+#define USE_FP_SQRT_ALGO 1
 
 #include "dtypes.h"
 
